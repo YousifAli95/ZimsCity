@@ -1,10 +1,3 @@
 ﻿Scaffold-DbContext -Connection name=DefaultConnection -Provider Microsoft.EntityFrameworkCore.SqlServer -Project "YousifsProject" -OutputDir "Models/Entities" -Context "CityContext" -NoOnConfiguring -Force
 
-Adress - inputtext
-number of floors - drop down - 3-9
-Color - color picker
-radio button roof : Dome, Triangle or flat
-Check Boxes: Fönster, balkong, dörr
-
-
-foreign key ([CompaniesId]) REFERENCES [dbo].[Companies] ([Id])
+Skapa en lokal databas som heter CityDB och publisha till den. 

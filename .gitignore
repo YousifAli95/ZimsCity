@@ -2,4 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/ZimsCity/v17
+/.vs/
+/YousifsSolution/YousifsProject/obj
+/YousifsSolution/YousifsProject/bin
+/YousifsSolution/.vs/YousifsSolution
