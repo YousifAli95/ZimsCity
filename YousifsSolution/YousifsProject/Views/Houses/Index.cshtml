@@ -1,0 +1,31 @@
+﻿@using YousifsProject.Controllers;
+@model IndexVM[]
+
+@{
+    ViewBag.Title = "Zims City";
+}
+@section CSS{
+     <link rel="stylesheet" href="~/CSS/Index.css">
+}
+@section Navbar{
+         <div  class="divspan" onclick="destroy()">
+         <span class="navspan"> Destroy All Houses</span>
+         </div>   
+}    
+
+<div class="super-container"></div>
+
+
+<input type="checkbox" id="check1" class="MyCheck" value="Flat Roof" checked> flat roof</input>
+<input type="checkbox" id="check1" class="MyCheck" value="Triangle Roof" checked> Triangle Roof</input>
+<input type="checkbox" id="check1" class="MyCheck" value="Dome Roof" checked>Dome Roof</input>
+<br></br>
+
+<input class="myNumber" type="number" value="9" id="maxFloor"> Max floor</input>
+<br></br>
+<input class="myNumber" type="number" value="3" id="minFloor"> Min floor</input>
+@section scripts{
+
+<script src="/JS/index.js"></script>
+
+}

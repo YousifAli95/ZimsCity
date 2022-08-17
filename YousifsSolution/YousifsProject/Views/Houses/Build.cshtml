@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Build a House";
+}
+@section CSS{
+     <link rel="stylesheet" href="CSS/Build.css">
+}
+@model BuildVM
+
+
+
+
+<form asp-action="Build">
+   <div class="form-container">
+   <div class="Adress">
+    <label asp-for="Address"></label>
+    <input asp-for="Address" /> 
+    <span class="valid-span" asp-validation-for="Address"></span>
+    </div>
+     <div class="dropdown">
+     <label asp-for="NumberOfFloors"></label>
+    <select asp-for="NumberOfFloors" asp-items="Model.FloorArray">
+    </select>
+     </div>
+    <div class="Color">  
+     <label asp-for="Color" ></label>
+    <input asp-for="Color" name="Color"  type="color"/>
+    </div>
+    <fieldset>
+<legend>Type of Roof</legend>
+    <input asp-for="TypeOfRoof" id="1" type="radio" value="Flat Roof" checked/> <label for="1">Flat Roof</label><br/>
+    <input asp-for="TypeOfRoof" id="2"  type="radio" value="Triangle Roof" /><label for="2">Triangle Roof</label><br/>
+    <input asp-for="TypeOfRoof" id="3"  type="radio" value="Dome Roof" /><label for="3">Dome Roof</label><br/>
+    </fieldset>
+    <div class="Checkbox">
+        <fieldset>
+            <legend>Building Settings</legend>
+        <div>
+         <input type="checkbox" asp-for="HaveBalcony"  />
+         <label class="checkbox-label" asp-for="HaveBalcony" > </label>
+         </div>
+         <div>
+     <input type="checkbox" asp-for="HaveWindow" />
+     <label class="checkbox-label"  asp-for="HaveWindow" > </label>
+     </div>
+     <div>
+     <input type="checkbox" asp-for="HaveDoor"  checked  />
+     <label class="checkbox-label"  asp-for="HaveDoor" > </label>
+     </div>
+     </fieldset>
+    </div>
+    
+
+    <input class="btn" type="submit" value="Add House"/>
+    </div>
+    </form>
+    
+    
+    @section scripts
+{
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
+}

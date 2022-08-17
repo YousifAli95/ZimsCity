@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/CSS/Navbar.css">
+   @RenderSection("CSS", false)
+   
+</head>
+<body>
+        <div class="My-navbar">
+        <div class="header"  onclick="location.href='/index'">
+        <h1 class="Z">Z</h1><h1>MS CITY</h1>
+        </div>
+         <div onclick="location.href='/index'" class="divspan">
+         <span class="navspan" >Show All Houses</span>
+         </div>
+         <div onclick="location.href='/Build'" class="divspan">
+         <span class="navspan"  >Build a House</span>
+         </div>
+
+          @RenderSection("Navbar", false) 
+          <div id="MySelect" class="divspan">
+                   <select name="sort" id="sort">
+          <option value="Color">Color</option>
+          <option value="NumberOfFloors">Height Ascending</option>
+          <option value="NumberOfFloors">Height Descending</option>
+          <option value="Address" selected="selected">Address</option>
+            </select>
+            </div>
+        </div>
+           <div class="Modal-back"> 
+               <div class="modal">
+                   <p>Are you sure that you want to destroy all houses?</p>
+                   <div>
+                   <input type="button" onclick="location.href='/DeleteAll'" value="Yes!!!"/>  
+                   <input type="button" onclick="location.href='/Index'" value="No :( "/>  
+                   </div>
+               </div>
+               </div>
+        @RenderSection("header", false)
+        @RenderBody()
+       
+        <footer style="margin-left:2rem; font-size: 2rem"> <partial name="_TimeBox" model="DateTime.Now" />
+            &copy; Yousif Ali
+        </footer>
+    <script src="https://kit.fontawesome.com/2381c935ba.js" crossorigin="anonymous"></script>
+        @RenderSection("scripts", false) 
+        <script src="/JS/Navbar.js"></script>
+</body>
+</html>
+
+                    @*"location.href='/saveMovings/?array=value1&array=value2'"*@
