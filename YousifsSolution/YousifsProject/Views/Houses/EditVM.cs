@@ -26,6 +26,8 @@ namespace YousifsProject.Views.Houses
 
         public string[]? TypeOfRoofsArray {get;set;}
 
+        [Display(Name = "House Width")]
+        public int HouseWidth { get; set; }
         public string GetStyle()
         {
             if (TypeOfRoof == "Flat Roof")

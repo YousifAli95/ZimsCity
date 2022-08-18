@@ -7,7 +7,7 @@
 
         @foreach (var house in @Model)
         {
-
+            var numberOfWindows = Math.Floor(house.NumberOfFloors / 8.0);
             <div data-id="@house.id" onclick="getMenu(@house.id)" class="house draggable" draggable="true">
                 <div data-height="0" id="@house.id" class="house-nav">
                     <a id="edit" href="/edit/@house.id">Edit   </a>
@@ -50,8 +50,8 @@
                         <path d="M376,264c4.418,0,8-3.582,8-8V40c0-4.418-3.582-8-8-8H136c-4.418,0-8,3.582-8,8v216c0,4.418,3.582,8,8,8s8-3.582,8-8V136
 		h79.999c4.418,0,8-3.582,8-8s-3.582-8-8-8H144V48h104v208c0,4.418,3.582,8,8,8s8-3.582,8-8V136h104v120
 		C368,260.418,371.582,264,376,264z M264,120V48h104v72H264z" />
-                            </g>
-                            </svg>
+                                    </g>
+                                    </svg>
                         // balcony
                     }
 
@@ -59,10 +59,12 @@
                 </div>
                 @for (int i = 0; i <= house.NumberOfFloors; i++)
                 {
-                    <div style="background: @house.Color" class="house-window">
+                    <div style="background: @house.Color; width: @house.GetWidth()" class="house-window">
                         @if (house.HaveWindow)
                         {
-                            <svg version="1.1"
+                            for (int k = 0; k < numberOfWindows; k++)
+                            {
+                                <svg version="1.1"
                      class="window"
                      xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -70,28 +72,30 @@
                      y="0px"
                      viewBox="0 0 512 512"
                      xml:space="preserve">
-                            <g>
-                            <g>
-                            <path d="M480,0H32c-5.896,0-10.667,4.776-10.667,10.667v490.667C21.333,507.224,26.104,512,32,512h448
+                                <g>
+                                <g>
+                                <path d="M480,0H32c-5.896,0-10.667,4.776-10.667,10.667v490.667C21.333,507.224,26.104,512,32,512h448
 			c5.896,0,10.667-4.776,10.667-10.667V10.667C490.667,4.776,485.896,0,480,0z M469.333,490.667H42.667V21.333h426.667V490.667z" />
-                          </g>
-                        </g>
-                            <g>
-                            <g>
-                            <path d="M437.333,42.667H266.667h-21.333H74.667C68.771,42.667,64,47.443,64,53.333v192v21.333v192
+                                                          </g>
+                                                        </g>
+                                <g>
+                                <g>
+                                <path d="M437.333,42.667H266.667h-21.333H74.667C68.771,42.667,64,47.443,64,53.333v192v21.333v192
 			c0,5.891,4.771,10.667,10.667,10.667h170.667h21.333h170.667c5.896,0,10.667-4.776,10.667-10.667v-192v-21.333v-192
 			C448,47.443,443.229,42.667,437.333,42.667z M245.333,448h-160V266.667h160V448z M245.333,245.333h-160V64h160V245.333z
 			 M426.667,448h-160V266.667h160V448z M426.667,245.333h-160V64h160V245.333z" />
-                          </g>
-                        </g>
-                      </svg>
-                            // window
+                                                          </g>
+                                                        </g>
+                                                      </svg>
+                                // window
+                            }
+
                         }
                     </div>
                 }
 
 
-                <div style="background: @house.Color" class="house-door">
+                <div style="background: @house.Color; width:@house.GetWidth()" class="house-door">
                     @if (house.HaveDoor)
                     {
                         <svg version="1.1"
@@ -118,13 +122,13 @@
                         <rect x="243.844" y="95.625" width="114.75" height="124.312" />
                         <rect x="243.844" y="392.062" width="114.75" height="124.312" />
                         <circle cx="424.336" cy="304.805" r="14.344" />
-                      </g>
-                    </g>
-                  </svg>
+                              </g>
+                            </g>
+                          </svg>
                     }
                 </div>
 
-                <div style="background: @house.Color" class="floor"> @house.Address</div>
+                <div style="background: @house.Color; @house.GetWidthFloor()" class="floor"> @house.Address</div>
             </div>
 
 

@@ -29,7 +29,6 @@ namespace YousifsProject.Views.Houses
         public bool HaveDoor { get; set; }
        
         
-
         public string GetStyle()
         {
             if (TypeOfRoof == "Flat Roof")

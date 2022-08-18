@@ -66,6 +66,7 @@ namespace YousifsProject.Models
                 NumberOfFloors = o.NumberOfFloors,
                 TypeOfRoof = o.Roof.TypeOfRoof,
                 id = o.Id,
+                HouseWidth = o.Width
             }).ToArrayAsync();
 
             if (isAscending)
@@ -91,8 +92,9 @@ namespace YousifsProject.Models
                 HaveWindow = house.HaveWindow,
                 NumberOfFloors = house.NumberOfFloors,
                 FloorArray = CreateFloorArray(),
-                TypeOfRoofsArray = cityContext.Roofs.Select(o=> o.TypeOfRoof).ToArray(),
-                TypeOfRoof = cityContext.Roofs.Find(house.RoofId).TypeOfRoof
+                TypeOfRoofsArray = cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray(),
+                TypeOfRoof = cityContext.Roofs.Find(house.RoofId).TypeOfRoof,
+                HouseWidth = house.Width
             };
         }
 
@@ -130,6 +132,7 @@ namespace YousifsProject.Models
             house.HaveDoor = model.HaveDoor;
             house.HaveWindow = model.HaveWindow;
             house.NumberOfFloors = model.NumberOfFloors;
+            house.Width = model.HouseWidth;
             cityContext.SaveChanges();
         }
 

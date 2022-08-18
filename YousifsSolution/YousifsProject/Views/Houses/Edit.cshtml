@@ -21,6 +21,10 @@
     <select asp-for="NumberOfFloors" asp-items="Model.FloorArray">
     </select>
      </div>
+            <div class="container-house-width">
+                <label for="house-width">House Width</label>
+                <input type="range" asp-for="HouseWidth" id="house-width" name="HouseWidth" min="0" max="100" />
+            </div>
          <div class="Color">  
      <label asp-for="Color" ></label>
     <input asp-for="Color" name="Color"  type="color"/>
