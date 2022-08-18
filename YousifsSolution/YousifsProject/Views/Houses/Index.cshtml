@@ -5,27 +5,48 @@
     ViewBag.Title = "Zims City";
 }
 @section CSS{
-     <link rel="stylesheet" href="~/CSS/Index.css">
+    <link rel="stylesheet" href="~/CSS/Index.css">
 }
-@section Navbar{
-         <div  class="divspan" onclick="destroy()">
-         <span class="navspan"> Destroy All Houses</span>
-         </div>   
-}    
+    @section Navbar{
+    <div class="divspan" onclick="destroy()">
+        <span class="navspan"> Destroy All Houses</span>
+    </div>
+    <div id="MySelect" class="divspan">
+        <select name="sort" id="sort">
+            <option value="NumberOfFloors">Height Ascending</option>
+            <option value="NumberOfFloors">Height Descending</option>
+            <option value="Address" selected="selected">Address</option>
+        </select>
+    </div>
+        <div onmouseover="filterMouseOver()" onmouseout="filterMouseOut()" id="filter-container" class="divspan">
+            <span class="navspan">Filters</span>
+        
+    <div class="filter">
+        <div class="int-filters">
+            <input class="myNumber" name="max" type="number" value="9" id="maxFloor" min="3" max="9"/>
+            <label class="int-label" for="maxFloor">Max Floor</label>
+                <input class="myNumber" name="min" type="number" value="3" id="minFloor" min="3" max="9" />
+            <label class="int-label" for="minFloor">Min Floor</label>
+        </div>
+        <div class="checkboxes">
+            <input type="checkbox" id="check1" class="myCheck" value="Flat Roof" checked />
+            <label for="check1">Flat Roof</label>
+            <input type="checkbox" id="check2" class="myCheck" value="Triangle Roof" checked />
+            <label for="check2">Triangle Roof</label>
+            <input type="checkbox" id="check3" class="myCheck" value="Dome Roof" checked />
+            <label for="check3">Dome Roof</label>
+        </div>
+    </div>
+    </div>
+}
 
-<div class="super-container"></div>
+    <div class="super-container"></div>
 
 
-<input type="checkbox" id="check1" class="MyCheck" value="Flat Roof" checked> flat roof</input>
-<input type="checkbox" id="check1" class="MyCheck" value="Triangle Roof" checked> Triangle Roof</input>
-<input type="checkbox" id="check1" class="MyCheck" value="Dome Roof" checked>Dome Roof</input>
-<br></br>
 
-<input class="myNumber" type="number" value="9" id="maxFloor"> Max floor</input>
-<br></br>
-<input class="myNumber" type="number" value="3" id="minFloor"> Min floor</input>
-@section scripts{
 
-<script src="/JS/index.js"></script>
+    @section scripts{
+
+    <script src="/JS/index.js"></script>
 
 }

@@ -18,9 +18,7 @@ namespace YousifsProject.Controllers
         [Route("index")]
         public IActionResult Index()
         {
-            //IndexVM[] model = service.GetIndexVM();
-            //var x = model.ToList().OrderBy(o => o.GetType().GetProperty("Address").GetValue(o, null)).ToArray();
-            //return PartialView("_IndexPartial", model);
+
             return View();
         }
 

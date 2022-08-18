@@ -26,7 +26,6 @@ h1 {
 }
 .My-navbar {
   width: 100vw;
-  height: 6rem;
   background: var(--navbar-color);
   color: white;
   display: flex;
@@ -86,11 +85,76 @@ select{
     cursor:pointer;
     background: var(--navbar-color);
     color: white;
-    border: 3px solid white;
+    border: 0.3rem solid white;
     font-family:'Times New Roman';
-    padding: 5px;
+    padding: 0.5rem;
 }
 #MySelect:hover{
     background-color: var(--navbar-color);
     text-decoration: none;
 }
+
+.myNumber {
+    width: 5rem;
+    padding: 0.5rem;
+    box-sizing:border-box;
+    height:4rem;
+    font-size: 2rem;
+}
+.filter {
+    background: var(--navbar-color);
+    position: absolute;
+    width: 35rem;
+    height: 0rem;
+    top: 1rem;
+    left: -1rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 0rem;
+    overflow: hidden;
+    transition: height ease-in 500ms, padding ease-in 500ms;
+}               
+
+.int-label{
+    font-size: 2rem;
+    margin: 0 1rem 0 0.4rem ;
+}
+
+label{cursor:pointer}
+
+.myCheck{
+    transform: scale(1.5);
+    margin-right:0.5rem;
+}
+.checkboxes label{
+    font-size:1.5rem;
+    margin-right:1rem;
+}
+.checkboxes{
+    margin-top:1rem;
+}
+
+#filter-container{
+    position:relative;
+    height:6rem;
+
+}
+
+.int-filters{
+
+}
+
+#filter-container:hover {
+    color: white;
+    background-color: var(--navbar-color);
+    text-decoration: none;
+}
+
+    #filter-container span:hover {
+        color: rgb(74, 66, 66);
+        background-color: azure;
+        text-decoration: underline;
+    }

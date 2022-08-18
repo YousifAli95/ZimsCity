@@ -6,7 +6,7 @@ const minFloorElement = document.querySelector("#minFloor");
 var maxFloor = maxFloorElement.value - 3; // -3 to normalize building height.
 var minFloor = minFloorElement.value - 3;
 
-var allRoofs = document.querySelectorAll(".MyCheck");
+var allRoofs = document.querySelectorAll(".myCheck");
 var myRoofs = "-";
 allRoofs.forEach(o => {
     myRoofs += " " + o.value;
@@ -147,6 +147,18 @@ function saveMove() {
     //exempempel på hur queryn kan se ut
     //    /saveMovings/?idArray=15007&idArray=15006&idArray=15010&idArray=15009
 
+}
+
+function filterMouseOut() {
+    let filter = document.querySelector(".filter");
+    filter.style.height = 0;
+    filter.style.padding = 0;
+}
+
+function filterMouseOver() {
+    let filter = document.querySelector(".filter");
+    filter.style.height = "15rem";
+    filter.style.padding = "1rem";
 }
 
 
