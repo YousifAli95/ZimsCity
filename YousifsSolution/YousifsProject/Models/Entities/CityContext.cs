@@ -23,7 +23,7 @@ namespace YousifsProject.Models.Entities
         {
             modelBuilder.Entity<House>(entity =>
             {
-                entity.HasIndex(e => e.Address, "UQ__Houses__7D0C3F321B2DCE52")
+                entity.HasIndex(e => e.Address, "UQ__Houses__7D0C3F324FC39095")
                     .IsUnique();
 
                 entity.Property(e => e.Address).HasMaxLength(50);
@@ -36,7 +36,7 @@ namespace YousifsProject.Models.Entities
                     .WithMany(p => p.Houses)
                     .HasForeignKey(d => d.RoofId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Houses__RoofID__49C3F6B7");
+                    .HasConstraintName("FK__Houses__RoofID__276EDEB3");
             });
 
             modelBuilder.Entity<Roof>(entity =>

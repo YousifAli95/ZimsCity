@@ -9,5 +9,6 @@
     [HaveDoor] BIT NOT NULL, 
     [NumberOfFloors] INT NOT NULL
     foreign key (RoofID) REFERENCES [dbo].[Roofs] ([Id]), 
-    [SortingOrder] INT NOT NULL  
+    [SortingOrder] INT NOT NULL, 
+    [Width] INT NOT NULL  
 )

@@ -31,7 +31,9 @@ namespace YousifsProject.Models
                 HaveWindow = model.HaveWindow,
                 Address = model.Address,
                 RoofId = cityContext.Roofs.SingleOrDefault(o=> o.TypeOfRoof == model.TypeOfRoof).Id,
+                Width = model.HouseWidth,
                 SortingOrder = ThisSortingOrder,
+
             });
             cityContext.SaveChanges();
         }

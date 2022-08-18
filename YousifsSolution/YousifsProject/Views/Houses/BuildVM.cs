@@ -10,7 +10,11 @@ namespace YousifsProject.Views.Houses
         [Required(ErrorMessage = "&#8592; Write an address")]
         [Display(Name = "Address")]
         public string Address { get; set; }
+
+        [Display(Name = "House Width")]
+        public int HouseWidth { get; set; }
         [Display(Name = "Number of Floors")]
+        
         public int NumberOfFloors { get; set; }
 
         [Display(Name = "Color of the House")]

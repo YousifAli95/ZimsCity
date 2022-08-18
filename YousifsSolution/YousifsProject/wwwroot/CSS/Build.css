@@ -131,3 +131,6 @@ fieldset > label {
     }
 
 
+#house-width {
+    width: var(--form-border);
+}

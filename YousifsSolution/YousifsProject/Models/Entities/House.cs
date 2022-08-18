@@ -14,6 +14,7 @@ namespace YousifsProject.Models.Entities
         public bool HaveDoor { get; set; }
         public int NumberOfFloors { get; set; }
         public int SortingOrder { get; set; }
+        public int Width { get; set; }
 
         public virtual Roof Roof { get; set; } = null!;
     }
