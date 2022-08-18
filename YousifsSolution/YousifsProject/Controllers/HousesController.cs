@@ -25,21 +25,9 @@ namespace YousifsProject.Controllers
         }
 
         [HttpGet("indexpartial/")]
-        public IActionResult IndexPartial(string sort, bool isAscending, string roofs, int minFloor = 0, int MaxFloor = 6)
+        public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
-            IndexVM[] model = service.GetIndexVM();
-            if (isAscending)
-            {
-            model = model.ToList().OrderBy(o => o.GetType().GetProperty(sort).GetValue(o, null)).
-                    Where(o=> o.NumberOfFloors >= minFloor && o.NumberOfFloors <= MaxFloor && roofs.Contains(o.TypeOfRoof)).
-                    ToArray();
-            }
-            else if (!isAscending)
-            {
-                model = model.ToList().OrderByDescending(o => o.GetType().GetProperty(sort).GetValue(o, null)).
-                    Where(o => o.NumberOfFloors >= minFloor && o.NumberOfFloors <= MaxFloor && roofs.Contains(o.TypeOfRoof)).
-                    ToArray();
-            }
+            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
             
             return PartialView("_IndexPartial", model);
         }

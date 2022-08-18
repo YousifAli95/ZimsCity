@@ -48,9 +48,13 @@ namespace YousifsProject.Models
             }
         }
 
-        public IndexVM[] GetIndexVM()
+        public async Task<IndexVM[]> GetIndexVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
-            return cityContext.Houses.OrderBy(o=> o.SortingOrder).Select(o => new IndexVM
+            var model = await cityContext.Houses.OrderBy(o => o.SortingOrder).Where(o =>
+            o.NumberOfFloors >= minFloor &&
+            o.NumberOfFloors <= MaxFloor &&
+            roofs.Contains(o.Roof.TypeOfRoof)).
+            Select(o => new IndexVM
             {
                 Color = o.Color,
                 Address = o.Address,
@@ -60,7 +64,16 @@ namespace YousifsProject.Models
                 NumberOfFloors = o.NumberOfFloors,
                 TypeOfRoof = o.Roof.TypeOfRoof,
                 id = o.Id,
-            }).ToArray();
+            }).ToArrayAsync();
+
+            if (isAscending)
+            {
+                return model.OrderBy(o => o.GetType().GetProperty(sort).GetValue(o, null)).ToArray();
+            }
+            else
+            {
+                return model.OrderByDescending(o => o.GetType().GetProperty(sort).GetValue(o, null)).ToArray();
+            }
         }
 
         internal EditVM GetEditVM(int id)
