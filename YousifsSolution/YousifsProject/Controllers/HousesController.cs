@@ -26,7 +26,7 @@ namespace YousifsProject.Controllers
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
             IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
-            
+
             return PartialView("_IndexPartial", model);
         }
 
@@ -45,7 +45,7 @@ namespace YousifsProject.Controllers
 
             if (!ModelState.IsValid)
             {
-            return View(service.getBuildVM());  
+                return View(service.getBuildVM());
             }
             if (!service.IsAddressAvailable(model.Address, -1))
             {
@@ -54,7 +54,7 @@ namespace YousifsProject.Controllers
             }
             service.Add(model);
             return RedirectToAction(nameof(Index));
-    }
+        }
 
         [Route("edit/{id}")]
         [HttpGet]
@@ -70,7 +70,7 @@ namespace YousifsProject.Controllers
         public IActionResult Edit(EditVM model, int id)
         {
             if (!ModelState.IsValid)
-            { 
+            {
                 return View(service.GetEditVM(id));
             }
             if (!service.IsAddressAvailable(model.Address, id))

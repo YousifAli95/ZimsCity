@@ -1,5 +1,9 @@
 ﻿function destroy() {
-    let x = document.querySelector(".Modal-back");
-    x.style.display = "block"
-   
+    const modalBackground = document.querySelector(".Modal-back");
+    modalBackground.style.display = "block" 
     }
+
+function noDestruction() {
+    const modalBackground = document.querySelector(".Modal-back");
+    modalBackground.style.display = "none"
+}

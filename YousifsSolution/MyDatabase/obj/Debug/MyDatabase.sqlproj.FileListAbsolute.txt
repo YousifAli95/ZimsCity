@@ -16,3 +16,9 @@ C:\Users\Eldhand\Desktop\work\Utbildning\Utbildning\MVC\MVC individual Project\Y
 C:\Users\Eldhand\Desktop\work\Utbildning\Utbildning\MVC\MVC individual Project\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.sqlproj.AssemblyReference.cache
 C:\Users\Eldhand\Desktop\work\Utbildning\Utbildning\MVC\MVC individual Project\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.dll
 C:\Users\Eldhand\Desktop\work\Utbildning\Utbildning\MVC\MVC individual Project\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.pdb
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\bin\Debug\MyDatabase.dacpac
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\bin\Debug\MyDatabase.dll
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\bin\Debug\MyDatabase.pdb
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.sqlproj.AssemblyReference.cache
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.dll
+C:\Users\Yousi\OneDrive\Desktop\Backup dator\work\Utbildning\Utbildning\MVC\ZimsCity\YousifsSolution\MyDatabase\obj\Debug\MyDatabase.pdb

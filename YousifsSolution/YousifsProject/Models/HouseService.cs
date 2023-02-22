@@ -1,11 +1,11 @@
-﻿using YousifsProject.Models.Entities;
-using YousifsProject.Views.Houses;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using YousifsProject.Models.Entities;
+using YousifsProject.Views.Houses;
 
 namespace YousifsProject.Models
 {
-    
+
     public class HouseService
     {
         CityContext cityContext;
@@ -20,7 +20,21 @@ namespace YousifsProject.Models
             int ThisSortingOrder = 1;
             if (cityContext.Houses.Count() > 0)
             {
-             ThisSortingOrder = cityContext.Houses.Max(o => o.SortingOrder) + 1;
+                ThisSortingOrder = cityContext.Houses.Max(o => o.SortingOrder) + 1;
+            }
+            if (cityContext.Roofs.Count() == 0)
+            {
+                cityContext.Roofs.Add(new Roof
+                {
+                    TypeOfRoof = "Flat Roof"
+                }); cityContext.Roofs.Add(new Roof
+                {
+                    TypeOfRoof = "Triangle Roof"
+                }); cityContext.Roofs.Add(new Roof
+                {
+                    TypeOfRoof = "Dome Roof"
+                });
+                cityContext.SaveChanges();
             }
             cityContext.Houses.Add(new House
             {
@@ -30,7 +44,7 @@ namespace YousifsProject.Models
                 HaveDoor = model.HaveDoor,
                 HaveWindow = model.HaveWindow,
                 Address = model.Address,
-                RoofId = cityContext.Roofs.SingleOrDefault(o=> o.TypeOfRoof == model.TypeOfRoof).Id,
+                RoofId = cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof == model.TypeOfRoof).Id,
                 SortingOrder = ThisSortingOrder,
             });
             cityContext.SaveChanges();
@@ -38,13 +52,14 @@ namespace YousifsProject.Models
 
         internal bool IsAddressAvailable(string address, int id)
         {
-            House? house = cityContext.Houses.SingleOrDefault(o=> o.Address == address);
-            if (house == null) {
+            House? house = cityContext.Houses.SingleOrDefault(o => o.Address == address);
+            if (house == null)
+            {
                 return true;
             }
             else
             {
-                 return (house.Id == id ? true: false);
+                return (house.Id == id ? true : false);
             }
         }
 
@@ -89,7 +104,7 @@ namespace YousifsProject.Models
                 HaveWindow = house.HaveWindow,
                 NumberOfFloors = house.NumberOfFloors,
                 FloorArray = CreateFloorArray(),
-                TypeOfRoofsArray = cityContext.Roofs.Select(o=> o.TypeOfRoof).ToArray(),
+                TypeOfRoofsArray = cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray(),
                 TypeOfRoof = cityContext.Roofs.Find(house.RoofId).TypeOfRoof
             };
         }
