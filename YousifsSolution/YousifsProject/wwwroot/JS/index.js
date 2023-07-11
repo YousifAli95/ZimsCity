@@ -59,7 +59,7 @@ await fetch(`indexpartial/?sort=${sort[0]}&isAscending=${sort[1]}&minFloor=${min
 
 
     //Code above this is responsible for sorting order/////////////
-    ///Code below this is responsible for dragging
+    // Code below this is responsible for dragging//
 
 
     // ------ Makes houses draggable ------------

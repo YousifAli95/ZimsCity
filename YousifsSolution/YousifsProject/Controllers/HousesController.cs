@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using YousifsProject.Models;
-using YousifsProject.Models.Entities;
+using YousifsProject.Services;
 using YousifsProject.Views.Houses;
 
 namespace YousifsProject.Controllers
@@ -8,8 +7,8 @@ namespace YousifsProject.Controllers
     public class HousesController : Controller
     {
 
-        HouseService service;
-        public HousesController(HouseService service)
+        IHouseService service;
+        public HousesController(IHouseService service)
         {
             this.service = service;
         }
@@ -32,15 +31,15 @@ namespace YousifsProject.Controllers
 
         [Route("Build")]
         [HttpGet]
-        public IActionResult Build()
+        public IActionResult BuildHouse()
         {
-            BuildVM model = service.getBuildVM();
+            BuildHouseVM model = service.getBuildVM();
             return View(model);
         }
 
         [Route("Build")]
         [HttpPost]
-        public IActionResult Build(BuildVM model)
+        public IActionResult BuildHouse(BuildHouseVM model)
         {
 
             if (!ModelState.IsValid)
@@ -52,22 +51,22 @@ namespace YousifsProject.Controllers
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.getBuildVM());
             }
-            service.Add(model);
+            service.AddHouse(model);
             return RedirectToAction(nameof(Index));
         }
 
         [Route("edit/{id}")]
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult EditHouse(int id)
         {
 
-            EditVM model = service.GetEditVM(id);
+            EditHouseVM model = service.GetEditVM(id);
             return View(model);
         }
 
         [Route("/edit/{id}")]
         [HttpPost]
-        public IActionResult Edit(EditVM model, int id)
+        public IActionResult EditHouse(EditHouseVM model, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -78,22 +77,38 @@ namespace YousifsProject.Controllers
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.GetEditVM(id));
             }
-            service.PostEditEmployee(model, id);
+            service.EditHouse(model, id);
             return RedirectToAction(nameof(Index));
         }
 
         [Route("delete/{id}")]
-        [HttpGet]
-        public IActionResult Delete(House house)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            service.Delete(house);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var houseToDelete = service.GetHouseById(id);
+                if (houseToDelete == null)
+                {
+                    return NotFound($"House with Id = {id} not found");
+                }
+
+                service.DeleteHouse(houseToDelete);
+                return StatusCode(StatusCodes.Status200OK);
+            }
+
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error deleting house");
+            }
         }
+
         [Route("DeleteAll")]
-        [HttpGet]
+        [HttpDelete]
         public IActionResult DeleteAll()
         {
-            service.DeleteAll();
+            service.DeleteAllHouses();
             return RedirectToAction(nameof(Index));
         }
 
@@ -101,7 +116,7 @@ namespace YousifsProject.Controllers
         [HttpPost]
         public IActionResult SaveMovings(int[] idArray)
         {
-            service.Reorder(idArray);
+            service.ReorderHouses(idArray);
             return Ok();
         }
     }
