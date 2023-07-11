@@ -10,7 +10,7 @@ var allRoofs = document.querySelectorAll(".myCheck");
 var myRoofs = "-";
 allRoofs.forEach(o => {
     myRoofs += " " + o.value;
-    o.addEventListener("change", function(){
+    o.addEventListener("change", function () {
         if (this.checked) {
             myRoofs += " " + this.value;
             getPartialView(mySort)
@@ -21,7 +21,6 @@ allRoofs.forEach(o => {
         }
     })
 });
-
 
 
 maxFloorElement.addEventListener("change", (event) => {
@@ -48,18 +47,27 @@ selectElement.addEventListener('change', (event) => {
 });
 getPartialView(mySort);
 
-async function  getPartialView(sort) {
 
-const superContainer = document.querySelector(".super-container");
-await fetch(`indexpartial/?sort=${sort[0]}&isAscending=${sort[1]}&minFloor=${minFloor}&maxFloor=${maxFloor}&roofs=${myRoofs}`, { method: "GET" }).
-    then(result => result.text()).
-    then(html => {
-        superContainer.innerHTML = html;
-    });
+function deleteHouse(id) {
+    console.log("Deleting");
+    fetch(`/delete/${id}`, { method: 'DELETE' })
+        .then(async response => console.log(response))
+        .then(() => getPartialView(mySort));
+}
 
 
-    //Code above this is responsible for sorting order/////////////
-    // Code below this is responsible for dragging//
+async function getPartialView(sort) {
+
+    const superContainer = document.querySelector(".super-container");
+    await fetch(`indexpartial/?sort=${sort[0]}&isAscending=${sort[1]}&minFloor=${minFloor}&maxFloor=${maxFloor}&roofs=${myRoofs}`, { method: "GET" }).
+        then(result => result.text()).
+        then(html => {
+            superContainer.innerHTML = html;
+        });
+
+
+    // Code above this is responsible for sorting order//
+    // Code below this is responsible for dragging //
 
 
     // ------ Makes houses draggable ------------
@@ -111,29 +119,21 @@ await fetch(`indexpartial/?sort=${sort[0]}&isAscending=${sort[1]}&minFloor=${min
             }
         ).element;
     }
-
-   
-
 }
 
-
-
-
-
-
 function getMenu(id) {
-  let x = document.getElementById(id);
-  if (x.dataset.height == 0) {
-    x.dataset.height = 10;
-    x.style.height = "10rem";
-  } else {
-    x.dataset.height = 0;
-    x.style.height = "0";
-  }
+    let x = document.getElementById(id);
+    if (x.dataset.height == 0) {
+        x.dataset.height = 10;
+        x.style.height = "10rem";
+    } else {
+        x.dataset.height = 0;
+        x.style.height = "0";
+    }
 }
 
 function saveMove() {
-  let ids = [...document.querySelectorAll(".house")].map((o) => o.dataset.id);
+    let ids = [...document.querySelectorAll(".house")].map((o) => o.dataset.id);
     query = "/saveMovings/?";
     for (var i = 0; i < ids.length; i++) {
         query += `idArray=${ids[i]}`
@@ -142,11 +142,7 @@ function saveMove() {
         }
     }
     console.log(query);
-    fetch(query, {method: "POST"})
-    //window.open(query, "_self")
-    //exempempel på hur queryn kan se ut
-    //    /saveMovings/?idArray=15007&idArray=15006&idArray=15010&idArray=15009
-
+    fetch(query, { method: "POST" })
 }
 
 function filterMouseOut() {

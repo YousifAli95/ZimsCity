@@ -11,7 +11,7 @@
             <div data-id="@house.id" onclick="getMenu(@house.id)" class="house draggable" draggable="true">
                 <div data-height="0" id="@house.id" class="house-nav">
                     <a id="edit" href="/edit/@house.id">Edit   </a>
-                    <a id="delete" href="/delete/@house.id">Delete</a>
+                    <a id="delete" onclick="deleteHouse(@house.id)">Delete</a>
                 </div>
 
                 @*Roof of the house*@

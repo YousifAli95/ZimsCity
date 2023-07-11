@@ -135,3 +135,6 @@ a {
   opacity: 0.5;
   cursor: move;
 }
+select, option{
+    cursor: pointer;
+}
