@@ -1,3 +1,0 @@
-﻿Scaffold-DbContext -Connection name=DefaultConnection -Provider Microsoft.EntityFrameworkCore.SqlServer -Project "YousifsProject" -OutputDir "Models/Entities" -Context "CityContext" -NoOnConfiguring -Force
-
-Skapa en lokal databas som heter CityDB och publisha till den. 
