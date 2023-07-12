@@ -8,7 +8,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: YousifsProject\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: YousifsProject
+  WORKING_DIRECTORY: YousifsSolution/YousifsProject
 jobs:
   build:
     runs-on: windows-latest
