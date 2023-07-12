@@ -17,7 +17,6 @@ namespace YousifsProject
             {
                 case "HouseServiceDB":
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
-
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     var typeOfConnection = string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase) ? "DefaultConnection" : "ProductionConnection";
                     var connectionString = builder.Configuration.GetConnectionString(typeOfConnection);
