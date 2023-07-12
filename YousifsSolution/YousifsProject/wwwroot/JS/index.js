@@ -1,6 +1,7 @@
 ﻿
 const selectElement = document.querySelector('#sort');
 var mySort = ["Address", true]
+const filter = document.querySelector(".filter");
 const maxFloorElement = document.querySelector("#maxFloor");
 const minFloorElement = document.querySelector("#minFloor");
 var maxFloor = maxFloorElement.value - 3; // -3 to normalize building height.
@@ -66,11 +67,7 @@ async function getPartialView(sort) {
         });
 
 
-    // Code above this is responsible for sorting order//
-    // Code below this is responsible for dragging //
-
-
-    // ------ Makes houses draggable ------------
+    // ------ Makes houses draggable ------------ //
     const draggables = document.querySelectorAll(".draggable");
     const container = document.querySelector(".container");
     draggables.forEach((draggable) => {
@@ -106,8 +103,6 @@ async function getPartialView(sort) {
             (closest, child) => {
                 const box = child.getBoundingClientRect();
                 const offset = x - box.left - box.width / 2;
-                //console.log(x);
-                //console.log(offset);
                 if (offset < 0 && offset > closest.offset) {
                     return { offset: offset, element: child };
                 } else {
@@ -122,14 +117,8 @@ async function getPartialView(sort) {
 }
 
 function getMenu(id) {
-    let x = document.getElementById(id);
-    if (x.dataset.height == 0) {
-        x.dataset.height = 10;
-        x.style.height = "10rem";
-    } else {
-        x.dataset.height = 0;
-        x.style.height = "0";
-    }
+    const menuElement = document.getElementById(`nav-item-${id}`);
+    menuElement.classList.toggle("house-nav-height-10")
 }
 
 function saveMove() {
@@ -146,15 +135,13 @@ function saveMove() {
 }
 
 function filterMouseOut() {
-    let filter = document.querySelector(".filter");
-    filter.style.height = 0;
-    filter.style.padding = 0;
+    filter.classList.remove("filter-mouse-over")
+    filter.classList.add("filter-mouse-out")
 }
 
 function filterMouseOver() {
-    let filter = document.querySelector(".filter");
-    filter.style.height = "15rem";
-    filter.style.padding = "1rem";
+    filter.classList.add("filter-mouse-over")
+    filter.classList.remove("filter-mouse-out")
 }
 
 
