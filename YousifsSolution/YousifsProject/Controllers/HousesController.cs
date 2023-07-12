@@ -13,8 +13,8 @@ namespace YousifsProject.Controllers
             this.service = service;
         }
 
-        [Route("")]
-        [Route("index")]
+        [HttpGet("")]
+        [HttpGet("index")]
         public IActionResult Index()
         {
 
@@ -29,16 +29,14 @@ namespace YousifsProject.Controllers
             return PartialView("_IndexPartial", model);
         }
 
-        [Route("Build")]
-        [HttpGet]
+        [HttpGet("Build")]
         public IActionResult BuildHouse()
         {
             BuildHouseVM model = service.getBuildVM();
             return View(model);
         }
 
-        [Route("Build")]
-        [HttpPost]
+        [HttpPost("Build")]
         public IActionResult BuildHouse(BuildHouseVM model)
         {
 
@@ -64,8 +62,7 @@ namespace YousifsProject.Controllers
             return View(model);
         }
 
-        [Route("/edit/{id}")]
-        [HttpPost]
+        [HttpPost("/edit/{id}")]
         public IActionResult EditHouse(EditHouseVM model, int id)
         {
             if (!ModelState.IsValid)
@@ -81,8 +78,7 @@ namespace YousifsProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Route("delete/{id}")]
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
             try
@@ -94,7 +90,7 @@ namespace YousifsProject.Controllers
                 }
 
                 service.DeleteHouse(houseToDelete);
-                return StatusCode(StatusCodes.Status200OK);
+                return Ok();
             }
 
             catch (Exception)
@@ -104,16 +100,14 @@ namespace YousifsProject.Controllers
             }
         }
 
-        [Route("DeleteAll")]
-        [HttpDelete]
+        [HttpGet("DeleteAll")]
         public IActionResult DeleteAll()
         {
             service.DeleteAllHouses();
             return RedirectToAction(nameof(Index));
         }
 
-        [Route("/saveMovings/")]
-        [HttpPost]
+        [HttpPost("/saveMovings/")]
         public IActionResult SaveMovings(int[] idArray)
         {
             service.ReorderHouses(idArray);
