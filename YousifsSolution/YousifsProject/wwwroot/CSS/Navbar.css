@@ -23,13 +23,15 @@ h1 {
 .header {
   margin-left: 3rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 .My-navbar {
-  width: 100vw;
+  min-width: 100vw;
   background: var(--navbar-color);
   color: white;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -138,10 +140,10 @@ label{cursor:pointer}
     margin-top:1rem;
 }
 
-#filter-container{
-    position:relative;
-    height:6rem;
-
+#filter-container {
+    position: relative;
+    height: 6rem;
+    margin-right: 35rem;
 }
 
 .int-filters{
