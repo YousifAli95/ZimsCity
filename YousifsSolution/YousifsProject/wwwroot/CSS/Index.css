@@ -161,9 +161,31 @@ select, option {
     padding: 1rem;
 }
 
-}
 
 .filter-mouse-out {
     height: 0rem;
     padding: 0rem;
+}
+
+.loading {
+    font-size: 4rem;
+}
+
+    .loading::after {
+        content: "";
+        animation: loading-animation 1500ms infinite;
+    }
+
+@keyframes loading-animation {
+    0% {
+        content: ".";
+    }
+
+    33% {
+        content: "..";
+    }
+
+    66% {
+        content: "...";
+    }
 }
