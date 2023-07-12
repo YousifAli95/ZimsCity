@@ -12,12 +12,16 @@ namespace YousifsProject
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             var serviceImplementation = builder.Configuration["ServiceImplementation"];
+
             switch (serviceImplementation)
             {
                 case "HouseServiceDB":
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
-                    var connString = builder.Configuration.GetConnectionString("DefaultConnection");
-                    builder.Services.AddDbContext<CityContext>(o => o.UseSqlServer(connString));
+
+                    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    var typeOfConnection = string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase) ? "DefaultConnection" : "ProductionConnection";
+                    var connectionString = builder.Configuration.GetConnectionString(typeOfConnection);
+                    builder.Services.AddDbContext<CityContext>(o => o.UseSqlServer(connectionString));
                     break;
                 default:
                     // Handle the case when no valid service implementation is specified
