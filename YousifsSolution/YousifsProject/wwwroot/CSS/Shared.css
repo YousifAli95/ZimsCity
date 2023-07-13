@@ -1,0 +1,18 @@
+:root {
+    font-size: 62.5%;
+    --house-width: 12rem;
+    --background-color: #c6e6f5;
+    --navbar-color: rgb(74, 66, 66);
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+footer {
+    font-size: 2rem;
+}
+
+.super-container, footer {
+    margin-left: 2rem;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/CSS/Navbar.css">
+    <link rel="stylesheet" href="~/CSS/Shared.css">
     @RenderSection("CSS", false)
 
 </head>
@@ -28,7 +29,7 @@
     @RenderSection("header", false)
     @RenderBody()
 
-    <footer style="margin-left:2rem; font-size: 2rem">
+    <footer id="footer">
         <partial name="_TimeBox" model="DateTime.Now" />
         &copy; Yousif Ali
     </footer>
