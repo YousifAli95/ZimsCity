@@ -19,6 +19,10 @@ namespace YousifsProject
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
 
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    if (string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new Exception("Testing if it is development");
+                    }
                     var typeOfConnection = string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase) ? "ProductionConnection" : "DefaultConnection";
                     var connectionString = builder.Configuration.GetConnectionString(typeOfConnection);
                     builder.Services.AddDbContext<CityContext>(o => o.UseSqlServer(connectionString));
