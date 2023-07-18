@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+@section CSS{
+    <link rel="stylesheet" href="CSS/login.css">
+}
+@model LoginVM
+
+@section scripts
+    {
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+<form asp-controller="Identity" asp-action="Login">
+    <div class="login-container">
+        <div class="username-div">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" />
+            <span class="valid-span" asp-validation-for="Username"></span>
+        </div>
+        <div class="password-div">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+        </div>
+        <a asp-controller="Identity" asp-action="SignUp">Sign up here</a>
+
+
+        <input class="btn" type="submit" value="Login" />
+    </div>
+</form>
+

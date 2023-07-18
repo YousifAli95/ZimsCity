@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using YousifsProject.Models.Entities;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Houses;
 
-namespace YousifsProject.Services
+namespace YousifsProject.Services.Implementations
 {
 
     public class HouseServiceDB : IHouseService
     {
         CityContext cityContext;
+        IHttpContextAccessor accessor;
 
-        public HouseServiceDB(CityContext cityContext)
+        public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor)
         {
             this.cityContext = cityContext;
+            this.accessor = accessor;
         }
 
         public void AddHouse(BuildHouseVM model)
@@ -24,6 +28,7 @@ namespace YousifsProject.Services
             }
 
             var roofId = GetRoofId(model.TypeOfRoof);
+            string userId = accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             cityContext.Houses.Add(new House
             {
@@ -35,6 +40,7 @@ namespace YousifsProject.Services
                 Address = model.Address,
                 RoofId = roofId,
                 SortingOrder = ThisSortingOrder,
+                UserId = userId
             });
             cityContext.SaveChanges();
         }

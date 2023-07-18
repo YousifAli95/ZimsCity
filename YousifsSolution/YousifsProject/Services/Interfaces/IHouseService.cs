@@ -2,7 +2,7 @@
 using YousifsProject.Models.Entities;
 using YousifsProject.Views.Houses;
 
-namespace YousifsProject.Services
+namespace YousifsProject.Services.Interfaces
 {
     public interface IHouseService
     {

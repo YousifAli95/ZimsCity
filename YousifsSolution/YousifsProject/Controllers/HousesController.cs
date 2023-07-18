@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using YousifsProject.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Houses;
 
 namespace YousifsProject.Controllers
 {
+    [Authorize]
     public class HousesController : Controller
     {
 
@@ -15,11 +17,7 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public IActionResult Index()
-        {
-
-            return View();
-        }
+        public async Task<IActionResult> Index() => View();
 
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
