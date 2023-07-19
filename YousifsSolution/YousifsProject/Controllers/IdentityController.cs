@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using YousifsProject.Services.Implementations;
 using YousifsProject.Views.Identity;
 
@@ -15,14 +16,50 @@ namespace YousifsProject.Controllers
         }
 
         [HttpGet("login")]
-        public ActionResult Login() => View();
+        public ActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToIndex();
+
+            return View();
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginAsync(LoginVM model)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToIndex();
+
+            if (!ModelState.IsValid)
+                return View();
+
+            var loginSucceded = await service.TryLoginUserAsync(model);
+
+            if (!loginSucceded)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return View();
+            }
+
+            return RedirectToIndex();
+
+        }
 
         [HttpGet("Signup")]
-        public ActionResult Signup(int id) => View();
+        public ActionResult Signup()
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToIndex();
+
+            return View();
+        }
 
         [HttpPost("Signup")]
         public async Task<ActionResult> SignupAsync(SignupVM model)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToIndex();
+
             if (!ModelState.IsValid)
                 return View();
 
@@ -37,15 +74,20 @@ namespace YousifsProject.Controllers
                 return View();
             }
 
-            return RedirectToAction(nameof(HousesController.Index), "Houses");
+            return RedirectToIndex();
         }
 
+        [Authorize]
         [HttpGet("Signout")]
         public async Task<ActionResult> Signout()
         {
-            service.SignOutUserAsync();
+            await service.SignOutUserAsync();
             return RedirectToAction(nameof(Login));
         }
 
+
+        ActionResult RedirectToIndex() => RedirectToAction(nameof(HousesController.Index), nameof(HousesController).Replace("Controller", ""));
+
     }
+
 }

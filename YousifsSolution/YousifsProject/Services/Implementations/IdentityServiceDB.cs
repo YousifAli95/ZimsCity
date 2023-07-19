@@ -19,7 +19,7 @@ namespace YousifsProject.Services.Implementations
 
         public async Task<string?> TryRegisterUserAsync(SignupVM model)
         {
-            var user = new ApplicationUser
+            var user = new IdentityUser
             {
                 UserName = model.Username,
             };
@@ -36,7 +36,6 @@ namespace YousifsProject.Services.Implementations
             }
             else
             {
-                Console.WriteLine(createResult);
                 Console.WriteLine(createResult.Errors.First().Description);
             }
 
@@ -47,5 +46,13 @@ namespace YousifsProject.Services.Implementations
         {
             await signInManager.SignOutAsync();
         }
+
+        public async Task<bool> TryLoginUserAsync(LoginVM model)
+        {
+            var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+            return result.Succeeded;
+        }
+
     }
 }

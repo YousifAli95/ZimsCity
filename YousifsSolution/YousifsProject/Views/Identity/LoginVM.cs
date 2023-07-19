@@ -4,7 +4,6 @@ namespace YousifsProject.Views.Identity
 {
     public class LoginVM
     {
-        [EmailAddress]
         [StringLength(maximumLength: 100)]
         [Display(Name = "Username")]
         [Required]
