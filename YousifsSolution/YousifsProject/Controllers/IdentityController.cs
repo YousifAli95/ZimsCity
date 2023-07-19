@@ -63,7 +63,6 @@ namespace YousifsProject.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            // Try to register user
             var errorMessage = await service.TryRegisterUserAsync(model);
             if (errorMessage != null)
             {
@@ -82,7 +81,7 @@ namespace YousifsProject.Controllers
         public async Task<ActionResult> Signout()
         {
             await service.SignOutUserAsync();
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction(nameof(Login), nameof(IdentityController).Replace("Controller", ""));
         }
 
 

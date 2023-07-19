@@ -20,12 +20,16 @@
         <div class="header-name" onclick="location.href='/index'">
             <h1 class="Z">Z</h1><h1>MS CITY</h1>
         </div>
-        <div onclick="location.href='/index'" class="divspan">
-            <span class="navspan">Show All Houses</span>
+
+        @if (isAuthenticated)
+        {
+            <div onclick="location.href='/index'" class="divspan">
+                <span class="navspan">Show All Houses</span>
+            </div>
+            <div onclick="location.href='/Build'" class="divspan">
+                <span class="navspan">Build a House</span>
         </div>
-        <div onclick="location.href='/Build'" class="divspan">
-            <span class="navspan">Build a House</span>
-        </div>
+        }
 
         @RenderSection("Navbar", false)
 
