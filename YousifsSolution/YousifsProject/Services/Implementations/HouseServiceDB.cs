@@ -116,7 +116,10 @@ namespace YousifsProject.Services.Implementations
 
         public void DeleteAllHouses()
         {
-            cityContext.Houses.RemoveRange(cityContext.Houses);
+            var userId = GetUserId();
+            var housesToDelete = cityContext.Houses.Where(h => h.UserId == userId);
+
+            cityContext.Houses.RemoveRange(housesToDelete);
             cityContext.SaveChanges();
         }
 
@@ -131,6 +134,12 @@ namespace YousifsProject.Services.Implementations
 
         public void DeleteHouse(House house)
         {
+            // Check if the current user has the necessary permission to delete the house
+            if (house.UserId != GetUserId())
+            {
+                throw new UnauthorizedAccessException("You don't have permission to delete this house.");
+            }
+
             cityContext.Remove(house);
             cityContext.SaveChanges();
         }
