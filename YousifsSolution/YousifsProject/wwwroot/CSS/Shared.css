@@ -11,8 +11,9 @@ body {
 
 footer {
     font-size: 2rem;
+    margin-top: 4rem;
 }
 
-.super-container, footer {
-    margin-left: 2rem;
+#body-container, footer {
+   margin-left: 3rem;
 }

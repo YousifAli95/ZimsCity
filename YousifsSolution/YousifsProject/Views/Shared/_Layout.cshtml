@@ -39,7 +39,9 @@
     </div>
 
     @RenderSection("header", false)
+    <div id="body-container">
     @RenderBody()
+    </div>
 
     <footer id="footer">
         <partial name="_TimeBox" model="DateTime.Now" />

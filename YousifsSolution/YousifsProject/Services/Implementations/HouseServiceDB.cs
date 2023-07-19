@@ -116,10 +116,7 @@ namespace YousifsProject.Services.Implementations
 
         public void DeleteAllHouses()
         {
-            foreach (var house in cityContext.Houses)
-            {
-                cityContext.Houses.Remove(house);
-            }
+            cityContext.Houses.RemoveRange(cityContext.Houses);
             cityContext.SaveChanges();
         }
 
@@ -195,7 +192,12 @@ namespace YousifsProject.Services.Implementations
             }
             else
                 return (int)RoofId;
+        }
 
+        public int GetHouseCount()
+        {
+            var userId = GetUserId();
+            return cityContext.Houses.Where(h => h.UserId == userId).Count();
         }
     }
 }

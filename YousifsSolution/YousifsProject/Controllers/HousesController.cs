@@ -17,7 +17,14 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public async Task<IActionResult> Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            if (service.GetHouseCount() == 0)
+                return RedirectToAction(nameof(BuildHouse));
+
+            return View();
+
+        }
 
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
@@ -37,16 +44,17 @@ namespace YousifsProject.Controllers
         [HttpPost("Build")]
         public IActionResult BuildHouse(BuildHouseVM model)
         {
-
             if (!ModelState.IsValid)
             {
                 return View(service.getBuildVM());
             }
+
             if (!service.IsAddressAvailable(model.Address, -1))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.getBuildVM());
             }
+
             service.AddHouse(model);
             return RedirectToAction(nameof(Index));
         }
@@ -67,11 +75,13 @@ namespace YousifsProject.Controllers
             {
                 return View(service.GetEditVM(id));
             }
+
             if (!service.IsAddressAvailable(model.Address, id))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.GetEditVM(id));
             }
+
             service.EditHouse(model, id);
             return RedirectToAction(nameof(Index));
         }

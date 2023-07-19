@@ -25,5 +25,7 @@ namespace YousifsProject.Services.Interfaces
         public string[] GetRoofsArray();
 
         public House? GetHouseById(int id);
+
+        public int GetHouseCount();
     }
 }
