@@ -20,7 +20,7 @@ namespace YousifsProject
             {
                 case "HouseServiceDB":
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
-                    builder.Services.AddTransient<IdentityServiceDB>();
+                    builder.Services.AddTransient<IIdentityService, IdentityServiceDB>();
 
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     environment = "";

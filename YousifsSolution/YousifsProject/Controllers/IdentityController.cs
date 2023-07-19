@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using YousifsProject.Services.Implementations;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Identity;
 
 namespace YousifsProject.Controllers
@@ -8,9 +8,9 @@ namespace YousifsProject.Controllers
     [Route("account")]
     public class IdentityController : Controller
     {
-        readonly IdentityServiceDB service;
+        readonly IIdentityService service;
 
-        public IdentityController(IdentityServiceDB service)
+        public IdentityController(IIdentityService service)
         {
             this.service = service;
         }

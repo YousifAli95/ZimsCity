@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using YousifsProject.Models.Entities;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Identity;
 
 namespace YousifsProject.Services.Implementations
 {
 
-    public class IdentityServiceDB
+    public class IdentityServiceDB : IIdentityService
     {
-        readonly CityContext cityContext;
         readonly UserManager<IdentityUser> userManager;
         readonly SignInManager<IdentityUser> signInManager;
         public IdentityServiceDB(CityContext cityContext, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            this.cityContext = cityContext;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
