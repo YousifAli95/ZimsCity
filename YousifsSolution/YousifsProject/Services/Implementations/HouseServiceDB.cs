@@ -28,7 +28,7 @@ namespace YousifsProject.Services.Implementations
             }
 
             var roofId = GetRoofId(model.TypeOfRoof);
-            string userId = accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = GetUserId();
 
             cityContext.Houses.Add(new House
             {
@@ -45,9 +45,16 @@ namespace YousifsProject.Services.Implementations
             cityContext.SaveChanges();
         }
 
+        private string GetUserId()
+        {
+            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
         public bool IsAddressAvailable(string address, int id)
         {
-            House? house = cityContext.Houses.SingleOrDefault(o => o.Address == address);
+            var userId = GetUserId();
+
+            var house = cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
             if (house == null)
             {
                 return true;
@@ -60,9 +67,12 @@ namespace YousifsProject.Services.Implementations
 
         public async Task<IndexVM[]> GetIndexVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
+            var userId = GetUserId();
+
             var model = await cityContext.Houses.OrderBy(o => o.SortingOrder).Where(o =>
             o.NumberOfFloors >= minFloor &&
             o.NumberOfFloors <= MaxFloor &&
+            o.UserId == userId &&
             roofs.Contains(o.Roof.TypeOfRoof)).
             Select(o => new IndexVM
             {
