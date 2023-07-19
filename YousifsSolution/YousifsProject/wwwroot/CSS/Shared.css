@@ -3,8 +3,15 @@
     --house-width: 12rem;
     --background-color: #c6e6f5;
     --navbar-color: rgb(74, 66, 66);
+    --margin-left-body-conatiner: 3rem;
 }
-
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
 body {
     background-color: var(--background-color);
 }
@@ -15,5 +22,5 @@ footer {
 }
 
 #body-container, footer {
-   margin-left: 3rem;
+    margin-left: var(--margin-left-body-conatiner);
 }
