@@ -1,8 +1,6 @@
 :root {
-    font-size: 62.5%;
-    --house-width: 12rem;
-    --background-color: #c6e6f5;
     --navbar-color: rgb(74, 66, 66);
+    --navbar-height: 11.5rem;
 }
 
 body {
@@ -36,11 +34,13 @@ h1 {
 
 .navbar {
     min-width: 100vw;
+    box-sizing: border-box;
     background: var(--navbar-color);
     padding: 2rem 3rem 2rem 0rem;
     color: white;
     display: flex;
     box-sizing: border-box;
+    min-height: var(--navbar-height);
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
