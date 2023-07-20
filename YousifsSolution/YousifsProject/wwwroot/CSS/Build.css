@@ -134,11 +134,13 @@ fieldset {
     background-color: var(--navbar-color);
     color: white;
     font-size: 2rem;
+    border: 0.1rem solid var(--navbar-color);
 }
 
     .btn:hover {
         background-color: white;
         color: black;
+
     }
 
     .btn:active {

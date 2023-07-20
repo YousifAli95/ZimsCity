@@ -17,21 +17,19 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public async Task<IActionResult> Index()
-        {
-            if (service.GetHouseCount() == 0)
-                return RedirectToAction(nameof(BuildHouse));
+        public async Task<IActionResult> Index() => View();
 
-            return View();
-
-        }
 
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
-            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            var houseCount = service.GetHouseCount();
 
-            return PartialView("_IndexPartial", model);
+            if (houseCount == 0)
+                return PartialView("~/Views/Houses/PartialViews/_NoHouseIndex.cshtml");
+
+            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            return PartialView("~/Views/Houses/PartialViews/_IndexPartial.cshtml", model);
         }
 
         [HttpGet("Build")]
