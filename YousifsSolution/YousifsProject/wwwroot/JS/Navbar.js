@@ -8,7 +8,9 @@ function hideModal() {
     modalBackground.style.display = "none"
 }
 
-document.querySelector('.modal-back').addEventListener('click', function (event) {
+modalBackground = document.querySelector('.modal-back');
+if (modalBackground) {
+    modalBackground.addEventListener('click', function (event) {
     var modalBack = document.querySelector('.modal-back');
     var modal = document.querySelector('.modal');
 
@@ -16,4 +18,5 @@ document.querySelector('.modal-back').addEventListener('click', function (event)
     if (event.target !== modal && event.target === modalBack) {
         hideModal();
     }
-});
+    });
+}

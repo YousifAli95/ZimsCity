@@ -1,4 +1,5 @@
-﻿document.querySelectorAll('input').forEach((input) => {
+﻿// Adds the correct css class if the form is autofilled when user visits the page
+document.querySelectorAll('input').forEach((input) => {
     input.addEventListener('animationstart', (event) => {
         if (event.animationName === 'autofill') {
             const label = document.getElementById(input.dataset.labelId)

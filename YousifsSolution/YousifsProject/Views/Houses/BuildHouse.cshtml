@@ -4,29 +4,37 @@
 @section CSS{
     <link rel="stylesheet" href="CSS/Build.css">
 }
+@section scripts
+    {
+    @*Validation scripts*@
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
 
 @model BuildHouseVM
 
-
-
-
-<form asp-action="BuildHouse">
+<form asp-controller="Houses" asp-action="BuildHouse">
     <div class="form-container">
         <h1>Design Your House</h1>
+
         <div class="Adress">
-            <label asp-for="Address"></label>
-            <input asp-for="Address" />
             <span class="valid-span" asp-validation-for="Address"></span>
+            <label asp-for="Address"></label>
+            <input required asp-for="Address" />
         </div>
+
         <div class="dropdown">
             <label asp-for="NumberOfFloors"></label>
             <select asp-for="NumberOfFloors" asp-items="Model.FloorArray">
             </select>
         </div>
+
         <div class="Color">
             <label asp-for="Color"></label>
             <input asp-for="Color" name="Color" type="color" />
         </div>
+
         <fieldset>
             <legend>Type of Roof</legend>
             <input asp-for="TypeOfRoof" id="1" type="radio" value="Flat Roof" checked />
@@ -39,6 +47,7 @@
             <label for="3">Dome Roof</label>
             <br />
         </fieldset>
+
         <div class="Checkbox">
             <fieldset>
                 <legend>Building Settings</legend>
@@ -57,15 +66,8 @@
             </fieldset>
         </div>
 
-
         <input class="btn" type="submit" value="Add House" />
     </div>
 </form>
 
 
-@section scripts
-    {
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-}

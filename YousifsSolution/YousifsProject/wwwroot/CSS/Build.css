@@ -46,12 +46,6 @@ input[type="text"] {
     padding: 0.5rem;
 }
 
-.valid-span {
-    display: inline-block;
-    position: absolute;
-    left: 26rem;
-}
-
 input[type="color"] {
     height: 3rem;
     box-sizing: border-box;
@@ -148,6 +142,16 @@ fieldset {
         transform: translateY(0.3rem);
         outline: var(--navbar-color) 0.2rem solid;
     }
+
+#NumberOfFloors {
+    font-size: 2rem;
+    cursor: pointer;
+    background: white;
+    color: var(--navbar-color);
+    border: 0.1rem solid var(--navbar-color);
+    font-family: 'Times New Roman';
+    padding: 0.5rem;
+}
 
 @media (max-width: 600px) {
     :root {

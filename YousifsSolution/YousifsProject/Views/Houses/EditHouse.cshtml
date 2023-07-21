@@ -4,16 +4,23 @@
 @section CSS{
     <link rel="stylesheet" href="~/CSS/Build.css">
 }
+@section scripts
+    {
+    @*Validation scripts*@
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
 @model EditHouseVM
-
-
-
 
 <form asp-controller="Houses" asp-action="EditHouse">
     <div class="form-container">
+        <h1>Edit Your House</h1>
+
         <div class="Adress">
+            <span class="valid-span" asp-validation-for="Address"></span>
             <label asp-for="Address"></label>
-            <input asp-for="Address" /> <span class="valid-span" asp-validation-for="Address"></span>
+            <input required asp-for="Address" />
         </div>
 
         <div>
@@ -21,26 +28,29 @@
             <select asp-for="NumberOfFloors" asp-items="Model.FloorArray">
             </select>
         </div>
+
         <div class="Color">
             <label asp-for="Color"></label>
             <input asp-for="Color" name="Color" type="color" />
         </div>
+
         <fieldset>
             <legend>Type of Roof</legend>
-            @for (int k = 0; k < Model.TypeOfRoofsArray.Length; k++)
+            @for (int index = 0; index < Model.TypeOfRoofsArray.Length; index++)
             {
-                if (Model.TypeOfRoof == Model.TypeOfRoofsArray[k])
+                if (Model.TypeOfRoof == Model.TypeOfRoofsArray[index])
                 {
-                    <input asp-for="TypeOfRoof" id="@k" type="radio" value="@Model.TypeOfRoofsArray[k]" checked />
+                    <input asp-for="TypeOfRoof" id="@index" type="radio" value="@Model.TypeOfRoofsArray[index]" checked />
                 }
                 else
                 {
-                    <input asp-for="TypeOfRoof" id="@k" type="radio" value="@Model.TypeOfRoofsArray[k]" />
+                    <input asp-for="TypeOfRoof" id="@index" type="radio" value="@Model.TypeOfRoofsArray[index]" />
                 }
-                <label for="@k">@Model.TypeOfRoofsArray[k]</label>
+                <label for="@index">@Model.TypeOfRoofsArray[index]</label>
                 <br />
             }
         </fieldset>
+
         <fieldset>
             <legend>Building Settings</legend>
             <div class="Checkbox">
@@ -61,12 +71,3 @@
         <input class="btn" type="submit" value="Submit Edit" />
     </div>
 </form>
-
-
-@section scripts
-    {
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-
-}

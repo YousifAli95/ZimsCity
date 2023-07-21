@@ -37,7 +37,7 @@ namespace YousifsProject.Controllers
 
             if (!loginSucceded)
             {
-                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                ModelState.AddModelError(nameof(LoginVM.Username), "Invalid username or password");
                 return View();
             }
 

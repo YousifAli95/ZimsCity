@@ -17,7 +17,7 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public async Task<IActionResult> Index() => View();
+        public IActionResult Index() => View();
 
 
         [HttpGet("indexpartial/")]

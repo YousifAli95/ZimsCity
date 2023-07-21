@@ -138,14 +138,6 @@ input:-webkit-autofill {
     color: var(--navbar-color);
 }
 
-.field-validation-error {
-    display: block;
-    font-size: 1.4rem;
-    background: var(--navbar-color);
-    color: white;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
 
 .input-container {
     position: relative;
