@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using YousifsProject.Models.Entities;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Houses;
 
-namespace YousifsProject.Services
+namespace YousifsProject.Services.Implementations
 {
 
     public class HouseServiceDB : IHouseService
     {
         CityContext cityContext;
+        IHttpContextAccessor accessor;
 
-        public HouseServiceDB(CityContext cityContext)
+        public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor)
         {
             this.cityContext = cityContext;
+            this.accessor = accessor;
         }
 
         public void AddHouse(BuildHouseVM model)
@@ -24,6 +28,7 @@ namespace YousifsProject.Services
             }
 
             var roofId = GetRoofId(model.TypeOfRoof);
+            string userId = GetUserId();
 
             cityContext.Houses.Add(new House
             {
@@ -35,13 +40,21 @@ namespace YousifsProject.Services
                 Address = model.Address,
                 RoofId = roofId,
                 SortingOrder = ThisSortingOrder,
+                UserId = userId
             });
             cityContext.SaveChanges();
         }
 
+        private string GetUserId()
+        {
+            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
         public bool IsAddressAvailable(string address, int id)
         {
-            House? house = cityContext.Houses.SingleOrDefault(o => o.Address == address);
+            var userId = GetUserId();
+
+            var house = cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
             if (house == null)
             {
                 return true;
@@ -54,9 +67,12 @@ namespace YousifsProject.Services
 
         public async Task<IndexVM[]> GetIndexVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
+            var userId = GetUserId();
+
             var model = await cityContext.Houses.OrderBy(o => o.SortingOrder).Where(o =>
             o.NumberOfFloors >= minFloor &&
             o.NumberOfFloors <= MaxFloor &&
+            o.UserId == userId &&
             roofs.Contains(o.Roof.TypeOfRoof)).
             Select(o => new IndexVM
             {
@@ -100,10 +116,10 @@ namespace YousifsProject.Services
 
         public void DeleteAllHouses()
         {
-            foreach (var house in cityContext.Houses)
-            {
-                cityContext.Houses.Remove(house);
-            }
+            var userId = GetUserId();
+            var housesToDelete = cityContext.Houses.Where(h => h.UserId == userId);
+
+            cityContext.Houses.RemoveRange(housesToDelete);
             cityContext.SaveChanges();
         }
 
@@ -118,6 +134,12 @@ namespace YousifsProject.Services
 
         public void DeleteHouse(House house)
         {
+            // Check if the current user has the necessary permission to delete the house
+            if (house.UserId != GetUserId())
+            {
+                throw new UnauthorizedAccessException("You don't have permission to delete this house.");
+            }
+
             cityContext.Remove(house);
             cityContext.SaveChanges();
         }
@@ -179,7 +201,12 @@ namespace YousifsProject.Services
             }
             else
                 return (int)RoofId;
+        }
 
+        public int GetHouseCount()
+        {
+            var userId = GetUserId();
+            return cityContext.Houses.Where(h => h.UserId == userId).Count();
         }
     }
 }

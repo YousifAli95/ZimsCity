@@ -12,11 +12,10 @@
 @section scripts{
 
     <script defer src="/JS/index.js"></script>
-
 }
 
 @section Navbar{
-    <div class="divspan" onclick="destroy()">
+    <div class="divspan" onclick="showModal()">
         <span class="navspan"> Destroy All Houses</span>
     </div>
     <div id="MySelect" class="divspan">
@@ -47,12 +46,14 @@
         </div>
     </div>
 }
-<div class="Modal-back" onclick="noDestruction()">
+<div class="modal-back">
     <div class="modal">
+    <button onclick="hideModal()" id="close-button">x</button>
         <p>Are you sure that you want to destroy all houses?</p>
-        <div>
-            <input type="button" onclick="location.href='/DeleteAll'" value="Yes!!!" />
-            <input type="button" onclick="noDestruction()" value="No :( " />
+        <div class="modal-button-div">
+            <a class="no-house-a" asp-controller="Houses" asp-action="DeleteAll">Delete all houses</a>
+
+            <input class="no-house-a" type="button" onclick="hideModal()" value="Don't delete Houses" />
         </div>
     </div>
 </div>

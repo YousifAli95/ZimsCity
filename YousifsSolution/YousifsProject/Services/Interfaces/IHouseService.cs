@@ -2,7 +2,7 @@
 using YousifsProject.Models.Entities;
 using YousifsProject.Views.Houses;
 
-namespace YousifsProject.Services
+namespace YousifsProject.Services.Interfaces
 {
     public interface IHouseService
     {
@@ -25,5 +25,7 @@ namespace YousifsProject.Services
         public string[] GetRoofsArray();
 
         public House? GetHouseById(int id);
+
+        public int GetHouseCount();
     }
 }

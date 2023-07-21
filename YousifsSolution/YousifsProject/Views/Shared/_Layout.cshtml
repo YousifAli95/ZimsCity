@@ -1,8 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    var isAuthenticated = User.Identity.IsAuthenticated;
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/CSS/Navbar.css">
     <link rel="stylesheet" href="~/CSS/Shared.css">
@@ -10,24 +16,36 @@
 
 </head>
 <body>
-    <div class="My-navbar">
-        <div class="header" onclick="location.href='/index'">
+    <div class="navbar">
+        <div class="header-name" onclick="location.href='/index'">
             <h1 class="Z">Z</h1><h1>MS CITY</h1>
         </div>
-        <div onclick="location.href='/index'" class="divspan">
-            <span class="navspan">Show All Houses</span>
+
+        @if (isAuthenticated)
+        {
+            <div onclick="location.href='/index'" class="divspan">
+                <span class="navspan">Show All Houses</span>
+            </div>
+            <div onclick="location.href='/Build'" class="divspan">
+                <span class="navspan">Build a House</span>
         </div>
-        <div onclick="location.href='/Build'" class="divspan">
-            <span class="navspan">Build a House</span>
-        </div>
+        }
 
         @RenderSection("Navbar", false)
 
-       
+        @if (isAuthenticated)
+        {
+            <div onclick="location.href='/account/signout'" id="signout" class="divspan">
+                <span class="navspan">Signout</span>
+            </div>
+        }
+
     </div>
 
     @RenderSection("header", false)
+    <div id="body-container">
     @RenderBody()
+    </div>
 
     <footer id="footer">
         <partial name="_TimeBox" model="DateTime.Now" />

@@ -1,98 +1,140 @@
 :root {
-    font-size: 62.5%;
-    --house-width: 12rem;
-    --background-color: #c6e6f5;
     --navbar-color: rgb(74, 66, 66);
+    --navbar-height: 11.5rem;
 }
+
 body {
-  background-color: var(--background-color);
-  margin: 0;
+    background-color: var(--background-color);
+    margin: 0;
 }
+
 h1 {
-  display: inline-block;
-  font-size: 3rem;
+    display: inline-block;
+    font-size: 3rem;
 }
+
 .Z::after {
-  content: "\e3af";
-  font-weight: 900;
-  font-family: "Font Awesome 5 Free";
-  font-size: 2.5rem;
-  transform: translateY(-0.2rem);
-  display:inline-block;
+    content: "\e3af";
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    font-size: 2.5rem;
+    transform: translateY(-0.2rem);
+    display: inline-block;
 }
-.header {
-  margin-left: 3rem;
-  cursor: pointer;
-  white-space: nowrap;
+
+.header-name {
+    cursor: pointer;
+    white-space: nowrap;
 }
-.My-navbar {
-  min-width: 100vw;
-  background: var(--navbar-color);
-  color: white;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+
+    .header-name:hover {
+        background: var(--background-color);
+        color: var(--navbar-color);
+    }
+
+.navbar {
+    min-width: 100vw;
+    box-sizing: border-box;
+    background: var(--navbar-color);
+    padding: 2rem 3rem 2rem 0rem;
+    color: white;
+    display: flex;
+    box-sizing: border-box;
+    min-height: var(--navbar-height);
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .divspan {
-  margin-left: 3rem;
-  height: inherit;
-  cursor: pointer;
-  font-size: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.divspan:hover {
-  color: rgb(74, 66, 66);
-  background-color: azure;
-  text-decoration: underline;
+    height: inherit;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.Modal-back {
-  position: absolute;
-  width: 100vw;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10;
-  overflow: hidden;
-  display: none;
-  cursor: pointer;
+    .divspan:hover {
+        color: rgb(74, 66, 66);
+        background-color: azure;
+        text-decoration: underline;
+    }
+
+.modal-back {
+    position: fixed;
+    width: 100vw;
+    height: 200vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 12;
+    transform: translateY(calc(-1 * var(--navbar-height)));
+    overflow: hidden;
+    display: none;
+    cursor: pointer;
 }
+
+.modal-button-div {
+    display: flex;
+}
+
+    .modal-button-div > * {
+        font-family: Arial, Helvetica, sans-serif;
+        width: 24rem;
+        cursor: pointer;
+        margin: 2rem;
+        text-align: center;
+        box-sizing: border-box;
+    }
 
 .modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: 2.5rem;
-  width: 55rem;
-  height: 18rem;
-  border-radius: 0.2rem;
-  background-color: white;
-  margin-left: 25%;
-  margin-top: 5%;
-}
-.modal input {
-  width: 12rem;
-  font-size: 3rem;
-  height: 6rem;
-  margin: 2rem;
-  cursor: pointer;
+    display: flex;
+    cursor: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2.5rem;
+    width: 59rem;
+    padding: 2rem 3rem;
+    height: 22rem;
+    border-radius: 0.2rem;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-select{
+#close-button {
+    color: grey;
+    margin: 0;
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 2.5rem;
+    text-align: right;
+    background-color: white;
+    border: none;
+}
+
+    #close-button:hover {
+        color: black;
+    }
+
+select {
     font-size: 2rem;
-    cursor:pointer;
+    cursor: pointer;
     background: var(--navbar-color);
     color: white;
     border: 0.3rem solid white;
-    font-family:'Times New Roman';
+    font-family: 'Times New Roman';
     padding: 0.5rem;
 }
-#MySelect:hover{
+
+#sort {
+    text-align: center;
+}
+
+#MySelect:hover {
     background-color: var(--navbar-color);
     text-decoration: none;
 }
@@ -100,10 +142,11 @@ select{
 .myNumber {
     width: 5rem;
     padding: 0.5rem;
-    box-sizing:border-box;
-    height:4rem;
+    box-sizing: border-box;
+    height: 4rem;
     font-size: 2rem;
 }
+
 .filter {
     background: var(--navbar-color);
     position: absolute;
@@ -119,25 +162,29 @@ select{
     padding: 0rem;
     overflow: hidden;
     transition: height ease-in 500ms, padding ease-in 500ms;
-}               
+}
 
-.int-label{
+.int-label {
     font-size: 2rem;
-    margin: 0 1rem 0 0.4rem ;
+    margin: 0 1rem 0 0.4rem;
 }
 
-label{cursor:pointer}
+label {
+    cursor: pointer
+}
 
-.myCheck{
+.myCheck {
     transform: scale(1.5);
-    margin-right:0.5rem;
+    margin-right: 0.5rem;
 }
-.checkboxes label{
-    font-size:1.5rem;
-    margin-right:1rem;
+
+.checkboxes label {
+    font-size: 1.5rem;
+    margin-right: 1rem;
 }
-.checkboxes{
-    margin-top:1rem;
+
+.checkboxes {
+    margin-top: 1rem;
 }
 
 #filter-container {
@@ -146,8 +193,9 @@ label{cursor:pointer}
     margin-right: 35rem;
 }
 
-.int-filters{
-
+#signout {
+    margin-left: auto;
+    margin-right: 3rem;
 }
 
 #filter-container:hover {
@@ -156,8 +204,35 @@ label{cursor:pointer}
     text-decoration: none;
 }
 
-    #filter-container span:hover {
-        color: rgb(74, 66, 66);
-        background-color: azure;
-        text-decoration: underline;
+#filter-container span:hover {
+    color: rgb(74, 66, 66);
+    background-color: azure;
+    text-decoration: underline;
+}
+
+.navbar > * {
+    margin-left: 3rem;
+}
+
+@media (max-width: 1550px) {
+    #signout {
+        margin-left: 3rem;
+        margin-right: 3rem
     }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        padding: 0 0rem 2rem 0rem;
+    }
+
+        .navbar > * {
+            margin-left: 0;
+            margin-bottom: 3rem;
+        }
+
+    #filter-container {
+        margin-right: 0;
+    }
+}

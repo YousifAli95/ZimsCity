@@ -1,133 +1,156 @@
 :root {
-  font-size: 62.5%;
-  --form-border: 23rem;
+    font-size: 62.5%;
+    --form-width: 45rem;
 }
-body {
-  background-color: #c6e6f5;
-  font-size: 2rem;
-}
+
 .navbutton {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
+
 .form-container {
-  width: var(--form-border);
-  margin-left: 1.5rem;
-  margin-top: 1.5rem;
+    font-size: 2rem;
+    max-width: var(--form-width);
+    padding: 3rem 4rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0.4rem 1.2rem;
+    margin-top: 5rem;
 }
-.form-container > * {
-  margin-bottom: 1.5rem;
-  width: var(--form-border);
-}
+
+    .form-container > h1 {
+        margin-bottom: 1.5rem;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align:center;
+        color: var(--navbar-color);
+    }
+
+    .form-container > * {
+        margin-bottom: 1.5rem;
+        width: var(--form-width);
+    }
+
 label {
-  display: block;
-  margin-bottom: 0.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
 }
+
 .address {
-  position: relative;
+    position: relative;
 }
+
 input[type="text"] {
-  height: 3rem;
-  box-sizing: border-box;
-  width: inherit;
-  font-size: 2rem;
+    height: 4rem;
+    box-sizing: border-box;
+    width: inherit;
+    font-size: 2rem;
+    padding: 0.5rem;
 }
+
 .valid-span {
-  display: inline-block;
-  position: absolute;
-  left: 26rem;
+    display: inline-block;
+    position: absolute;
+    left: 26rem;
 }
+
 input[type="color"] {
-  height: 3rem;
-  box-sizing: border-box;
-  width: inherit;
+    height: 3rem;
+    box-sizing: border-box;
+    width: inherit;
 }
+
 fieldset {
-  display: inline-block;
-  box-sizing: border-box;
+    display: inline-block;
+    box-sizing: border-box;
 }
+
 select {
-  display: block;
-  font-size: 2rem;
-  width: inherit;
+    display: block;
+    font-size: 2rem;
+    width: inherit;
 }
 
 input[type="checkbox"] {
-  position: relative;
-  appearance: none;
-  outline: none;
-  width: 5rem;
-  height: 3rem;
-  background-color: #d6361e;
-  border: 0.1rem solid #d9dadc;
-  border-radius: 5rem;
-  transition-duration: 300ms;
-  transition-timing-function: ease-in-out;
-  vertical-align: middle;
+    position: relative;
+    appearance: none;
+    outline: none;
+    width: 5rem;
+    height: 3rem;
+    background-color: #d6361e;
+    border: 0.1rem solid #d9dadc;
+    border-radius: 5rem;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    vertical-align: middle;
 }
 
-input[type="checkbox"]:after {
-  content: "";
-  position: absolute;
-  top: 0.1rem;
-  left: 0.1rem;
-  width: 2.6rem;
-  height: 2.6rem;
-  background-color: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0.2rem 0.4rem 0.6rem rgba(0, 0, 0, 0.2);
-  transition-duration: 300ms;
-  transition-timing-function: ease-in-out;
-}
+    input[type="checkbox"]:after {
+        content: "";
+        position: absolute;
+        top: 0.1rem;
+        left: 0.1rem;
+        width: 2.6rem;
+        height: 2.6rem;
+        background-color: #ffffff;
+        border-radius: 50%;
+        box-shadow: 0.2rem 0.4rem 0.6rem rgba(0, 0, 0, 0.2);
+        transition-duration: 300ms;
+        transition-timing-function: ease-in-out;
+    }
 
-input[type="checkbox"]:checked {
-  background-color: #4ed164;
-}
+    input[type="checkbox"]:checked {
+        background-color: #4ed164;
+    }
 
-input[type="checkbox"]:checked:after {
-  left: 2rem;
-}
+        input[type="checkbox"]:checked:after {
+            left: 2rem;
+        }
+
 input,
 label {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 fieldset {
-  border: 0.2rem solid black;
-  width: inherit;
+    border: 0.2rem solid black;
+    width: inherit;
 }
-fieldset > input {
-  margin-bottom: 1rem;
-}
-fieldset > label {
-  display: inline;
-}
-/*.checkbox-inside{
-    display:flex;
-    flex-direction:column;
-    justify-content:center
-}*/
+
+    fieldset > input {
+        margin-bottom: 1rem;
+    }
+
+    fieldset > label {
+        display: inline;
+    }
 
 .checkbox-label {
-  display: inline-block;
+    display: inline-block;
 }
 
-.btn{
-    border:none;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        background-color: var(--navbar-color);
-        color:white;
-        font-size: 2rem;
-
+.btn {
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--navbar-color);
+    color: white;
+    font-size: 2rem;
+    border: 0.1rem solid var(--navbar-color);
 }
+
     .btn:hover {
         background-color: white;
         color: black;
+
     }
+
     .btn:active {
         box-shadow: 0 1px rgba(20, 20, 20, 0.966);
         transform: translateY(0.3rem);
         outline: var(--navbar-color) 0.2rem solid;
     }
 
-
+@media (max-width: 600px) {
+    :root {
+        --form-width: 25rem;
+    }
+}

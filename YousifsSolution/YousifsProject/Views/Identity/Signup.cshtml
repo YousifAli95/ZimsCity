@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Signup";
+}
+@section CSS{
+    <link rel="stylesheet" href="~/CSS/Login.css">
+}
+
+@model SignupVM
+
+@section scripts
+    {
+    <script defer src="/JS/Login.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    <script defer src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+<form class="identity-form" id="login-form" asp-controller="Identity" asp-action="Signup">
+    <div class="form-div">
+        <span class="valid-span" asp-validation-for="Username"></span>
+        <div class="input-container">
+        <div class="icon-div"><svg class="login-icon" id="user-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" /></svg></div>
+        <input class="login-input" asp-for="Username" required data-label-id="usernameLabel" autocomplete="off" />
+        <label asp-for="Username" id="usernameLabel"></label>
+        </div>
+    </div>
+
+    <div class="form-div">
+        <span class="valid-span" asp-validation-for="Password"></span>
+        <div class="input-container">
+        <div class="icon-div"><svg class="login-icon" id="lock-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" /></svg></div>
+        <input class="login-input" asp-for="Password" required data-label-id="passwordLabel" autocomplete="off" />
+        <label asp-for="Password" id="passwordLabel"></label>
+        </div>
+    </div>
+
+    <div class="form-div">
+        <span class="valid-span" asp-validation-for="ConfirmPassword"></span>
+        <div class="input-container"><div class="icon-div"><svg class="login-icon" id="lock-svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" /></svg></div>
+        <input class="login-input" asp-for="ConfirmPassword" required data-label-id="confirmPasswordLabel" autocomplete="off" />
+        <label asp-for="ConfirmPassword" id="confirmPasswordLabel"></label>
+        </div>
+    </div>
+
+    <input class="login-button" type="submit" value="Signup" />
+</form>

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using YousifsProject.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Houses;
 
 namespace YousifsProject.Controllers
 {
+    [Authorize]
     public class HousesController : Controller
     {
 
@@ -15,18 +17,19 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public IActionResult Index()
-        {
+        public async Task<IActionResult> Index() => View();
 
-            return View();
-        }
 
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
-            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            var houseCount = service.GetHouseCount();
 
-            return PartialView("_IndexPartial", model);
+            if (houseCount == 0)
+                return PartialView("~/Views/Houses/PartialViews/_NoHouseIndex.cshtml");
+
+            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            return PartialView("~/Views/Houses/PartialViews/_IndexPartial.cshtml", model);
         }
 
         [HttpGet("Build")]
@@ -39,16 +42,17 @@ namespace YousifsProject.Controllers
         [HttpPost("Build")]
         public IActionResult BuildHouse(BuildHouseVM model)
         {
-
             if (!ModelState.IsValid)
             {
                 return View(service.getBuildVM());
             }
+
             if (!service.IsAddressAvailable(model.Address, -1))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.getBuildVM());
             }
+
             service.AddHouse(model);
             return RedirectToAction(nameof(Index));
         }
@@ -69,11 +73,13 @@ namespace YousifsProject.Controllers
             {
                 return View(service.GetEditVM(id));
             }
+
             if (!service.IsAddressAvailable(model.Address, id))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
                 return View(service.GetEditVM(id));
             }
+
             service.EditHouse(model, id);
             return RedirectToAction(nameof(Index));
         }
