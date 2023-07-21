@@ -189,7 +189,6 @@ label {
 
 #filter-container {
     position: relative;
-    height: 6rem;
     margin-right: 35rem;
 }
 
@@ -221,18 +220,25 @@ label {
     }
 }
 
+.navbar h1 {
+    margin:0;
+}
+
 @media (max-width: 600px) {
     .navbar {
         flex-direction: column;
-        padding: 0 0rem 2rem 0rem;
+        justify-content: center;
+        padding: 3rem;
     }
 
+        .navbar > *:not(:first-child) {
+            margin-top: 3rem;
+        }
         .navbar > * {
             margin-left: 0;
-            margin-bottom: 3rem;
         }
 
-    #filter-container {
-        margin-right: 0;
-    }
+        #filter-container {
+            margin-right: 0;
+        }
 }

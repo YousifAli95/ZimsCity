@@ -23,7 +23,7 @@ input, button {
     box-sizing: border-box;
 }
 
-.form-div{
+.form-div {
     max-width: 41rem;
 }
 
@@ -150,4 +150,18 @@ input:-webkit-autofill {
 .input-container {
     position: relative;
     display: flex;
+}
+
+@media (max-width: 550px) {
+    #login-form {
+        width: 35rem;
+    }
+
+    .login-input {
+        width: 20rem;
+    }
+
+    .login-button {
+        width: 26rem;
+    }
 }
