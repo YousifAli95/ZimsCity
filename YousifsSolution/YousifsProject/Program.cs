@@ -23,7 +23,6 @@ namespace YousifsProject
                     builder.Services.AddTransient<IIdentityService, IdentityServiceDB>();
 
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                    environment = "";
                     var typeOfConnection = string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase) ? "ProductionConnection" : "DefaultConnection";
                     var connectionString = builder.Configuration.GetConnectionString(typeOfConnection);
                     builder.Services.AddDbContext<CityContext>(o => o.UseSqlServer(connectionString));
@@ -31,7 +30,6 @@ namespace YousifsProject
                     builder.Services.AddHttpContextAccessor();
                     break;
                 default:
-                    // Handle the case when no valid service implementation is specified
                     throw new InvalidOperationException("Invalid service implementation specified in the configuration.");
             }
 
