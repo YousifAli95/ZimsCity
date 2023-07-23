@@ -1,30 +1,20 @@
-:root {
-    --navbar-color: rgb(74, 66, 66);
-    --navbar-height: 11.5rem;
-}
-
-body {
-    background-color: var(--background-color);
+.navbar h1 {
+    display: inline-block;
+    font-size: 5rem;
     margin: 0;
 }
 
-h1 {
-    display: inline-block;
-    font-size: 3rem;
-}
-
-.Z::after {
-    content: "\e3af";
-    font-weight: 900;
-    font-family: "Font Awesome 5 Free";
-    font-size: 2.5rem;
-    transform: translateY(-0.2rem);
-    display: inline-block;
+#house-svg {
+    fill: white;
+    height: 4rem;
+    margin: 0 0 0 0.5rem;
 }
 
 .header-name {
     cursor: pointer;
     white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
 }
 
     .header-name:hover {
@@ -32,18 +22,21 @@ h1 {
         color: var(--navbar-color);
     }
 
+        .header-name:hover #house-svg {
+            fill: var(--navbar-color);
+        }
+
 .navbar {
-    min-width: 100vw;
+    min-width: 100%;
     box-sizing: border-box;
     background: var(--navbar-color);
-    padding: 2rem 3rem 2rem 0rem;
+    padding: 2rem;
     color: white;
     display: flex;
-    box-sizing: border-box;
     min-height: var(--navbar-height);
     flex-direction: row;
-    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .divspan {
@@ -54,6 +47,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-right: 3rem;
 }
 
     .divspan:hover {
@@ -192,53 +186,57 @@ label {
     margin-right: 35rem;
 }
 
-#signout {
+    #filter-container:hover {
+        color: white;
+        background-color: var(--navbar-color);
+        text-decoration: none;
+    }
+
+    #filter-container span:hover {
+        color: rgb(74, 66, 66);
+        background-color: azure;
+        text-decoration: underline;
+    }
+
+.navbar-side {
+    display: flex;
+}
+
+#navbar-right-side {
     margin-left: auto;
-    margin-right: 3rem;
 }
 
-#filter-container:hover {
-    color: white;
-    background-color: var(--navbar-color);
-    text-decoration: none;
+#navbar-left-side {
+    margin-right: auto;
 }
 
-#filter-container span:hover {
-    color: rgb(74, 66, 66);
-    background-color: azure;
-    text-decoration: underline;
-}
+@media (max-width: 1350px) {
 
-.navbar > * {
-    margin-left: 3rem;
-}
+    #navbar-left-side {
+        display: none;
+    }
 
-@media (max-width: 1550px) {
-    #signout {
-        margin-left: 3rem;
-        margin-right: 3rem
+    .header-name {
+        margin-left: 4rem;
     }
 }
 
-.navbar h1 {
-    margin:0;
-}
-
-@media (max-width: 600px) {
-    .navbar {
+@media (max-width: 860px) {
+    .navbar, #navbar-right-side {
         flex-direction: column;
         justify-content: center;
-        padding: 3rem;
     }
 
-        .navbar > *:not(:first-child) {
-            margin-top: 3rem;
-        }
-        .navbar > * {
-            margin-left: 0;
-        }
+    #navbar-right-side, .divspan, .header-name {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
-        #filter-container {
-            margin-right: 0;
-        }
+    .divspan {
+        margin-top: 2rem;
+    }
+
+    :root {
+        --navbar-height: 22.7rem;
+    }
 }

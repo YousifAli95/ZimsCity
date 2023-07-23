@@ -10,22 +10,36 @@
 }
 
 @section scripts{
-
     <script defer src="/JS/index.js"></script>
 }
 
-@section Navbar{
+@*@section Navbar{
     <div class="divspan" onclick="showModal()">
         <span class="navspan"> Destroy All Houses</span>
     </div>
-    <div id="MySelect" class="divspan">
+}
+*@
+
+<div class="modal-back">
+    <div class="modal">
+    <button onclick="hideModal()" id="close-button">x</button>
+        <p>Are you sure that you want to destroy all houses?</p>
+        <div class="modal-button-div">
+            <a class="no-house-a" asp-controller="Houses" asp-action="DeleteAll">Delete all houses</a>
+
+            <input class="no-house-a" type="button" onclick="hideModal()" value="Don't delete Houses" />
+        </div>
+    </div>
+</div>
+
+<div id="MySelect" class="divspan">
         <select name="sort" id="sort">
             <option value="NumberOfFloors">Height Ascending</option>
             <option value="NumberOfFloors">Height Descending</option>
             <option value="Address" selected="selected">Address</option>
         </select>
     </div>
-    <div onmouseover="filterMouseOver()" onmouseout="filterMouseOut()" id="filter-container" class="divspan">
+ <div onmouseover="filterMouseOver()" onmouseout="filterMouseOut()" id="filter-container" class="divspan">
         <span class="navspan">Filters</span>
 
         <div class="filter">
@@ -45,18 +59,6 @@
             </div>
         </div>
     </div>
-}
-<div class="modal-back">
-    <div class="modal">
-    <button onclick="hideModal()" id="close-button">x</button>
-        <p>Are you sure that you want to destroy all houses?</p>
-        <div class="modal-button-div">
-            <a class="no-house-a" asp-controller="Houses" asp-action="DeleteAll">Delete all houses</a>
-
-            <input class="no-house-a" type="button" onclick="hideModal()" value="Don't delete Houses" />
-        </div>
-    </div>
-</div>
 <div class="super-container"><p class="loading">Loading</p></div>
 
 
