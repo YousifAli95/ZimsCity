@@ -169,9 +169,3 @@ input:-webkit-autofill {
         width: 26rem;
     }
 }
-
-@media (max-height: 600px) {
-    #login-form {
-        margin-top: 3rem;
-    }
-}

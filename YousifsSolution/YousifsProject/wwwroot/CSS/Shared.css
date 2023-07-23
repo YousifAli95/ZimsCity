@@ -21,10 +21,12 @@ body {
 
 #body-container {
     display: flex;
+    box-sizing: border-box;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - var(--navbar-height));
+    padding: 3rem 0;
 }
 
 footer {
@@ -39,7 +41,6 @@ footer {
     font-size: 1.6rem;
     background: var(--navbar-color);
     color: white;
-    padding: 1rem;
     margin-bottom: 1rem;
     text-align: center;
 }
