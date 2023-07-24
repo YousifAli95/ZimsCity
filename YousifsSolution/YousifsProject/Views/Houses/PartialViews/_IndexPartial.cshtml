@@ -1,13 +1,10 @@
 ﻿@using YousifsProject.Views.Houses
 @model IndexVM[]
+
 <div>
     <div class="container">
-
-
-
         @foreach (var house in @Model)
         {
-
             <div data-id="@house.id" onclick="getMenu(@house.id)" class="house draggable" draggable="true">
                 <div data-height="0" id="nav-item-@house.id" class="house-nav">
                     <a id="edit" href="/edit/@house.id">Edit   </a>
