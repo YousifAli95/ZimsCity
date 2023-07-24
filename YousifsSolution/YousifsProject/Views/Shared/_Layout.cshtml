@@ -5,14 +5,15 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
+
     <link rel="stylesheet" href="~/CSS/Shared.css">
     <link rel="stylesheet" href="~/CSS/Navbar.css">
     @RenderSection("CSS", false)
+
     <script defer src="/JS/Navbar.js"></script>
     @RenderSection("scripts", false)
 
@@ -46,8 +47,6 @@
             </div>
         }
     </navbar>
-
-    @RenderSection("header", false)
 
     <div id="body-container">
         @RenderBody()
