@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using YousifsProject.Models.Entities;
-using YousifsProject.Views.Houses;
+using YousifsProject.Views.Houses.ViewModels;
 
 namespace YousifsProject.Services.Interfaces
 {

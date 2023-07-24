@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YousifsProject.Services.Interfaces;
-using YousifsProject.Views.Houses;
+using YousifsProject.Views.Houses.ViewModels;
 
 namespace YousifsProject.Controllers
 {

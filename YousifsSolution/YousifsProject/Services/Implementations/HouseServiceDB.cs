@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Interfaces;
-using YousifsProject.Views.Houses;
+using YousifsProject.Views.Houses.ViewModels;
 
 namespace YousifsProject.Services.Implementations
 {
