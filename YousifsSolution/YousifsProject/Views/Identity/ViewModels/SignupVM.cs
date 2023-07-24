@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace YousifsProject.Views.Identity
+namespace YousifsProject.Views.Identity.ViewModels
 {
     public class SignupVM
     {

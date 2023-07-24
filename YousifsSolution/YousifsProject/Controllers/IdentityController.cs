@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YousifsProject.Services.Interfaces;
-using YousifsProject.Views.Identity;
+using YousifsProject.Views.Identity.ViewModels;
 
 namespace YousifsProject.Controllers
 {

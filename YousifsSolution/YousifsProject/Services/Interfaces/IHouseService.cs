@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using YousifsProject.Models.Entities;
-using YousifsProject.Views.Houses;
+using YousifsProject.Views.Houses.ViewModels;
 
 namespace YousifsProject.Services.Interfaces
 {
@@ -9,7 +9,7 @@ namespace YousifsProject.Services.Interfaces
         public void AddHouse(BuildHouseVM model);
         public bool IsAddressAvailable(string address, int id);
 
-        public Task<IndexVM[]> GetIndexVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor);
+        public Task<IndexPartialVM[]> GetIndexPartialVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor);
         public EditHouseVM GetEditVM(int id);
 
         public void DeleteAllHouses();
@@ -27,5 +27,7 @@ namespace YousifsProject.Services.Interfaces
         public House? GetHouseById(int id);
 
         public int GetHouseCount();
+
+        public IndexVM GetIndexVM();
     }
 }

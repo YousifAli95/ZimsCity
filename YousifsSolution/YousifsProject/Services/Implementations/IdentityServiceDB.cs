@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Interfaces;
-using YousifsProject.Views.Identity;
+using YousifsProject.Views.Identity.ViewModels;
 
 namespace YousifsProject.Services.Implementations
 {

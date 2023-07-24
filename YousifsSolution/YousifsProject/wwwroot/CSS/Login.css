@@ -1,3 +1,15 @@
+#header-name {
+    /* Overriding margins set in Navbar.css */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+:root {
+    /* Overriding variable value set in Navbar.css */
+    --navbar-height: 12.5rem;
+}
+
+
 #login-form {
     background-color: white;
     border-radius: 0.5rem;
@@ -144,7 +156,7 @@ input:-webkit-autofill {
     display: flex;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
     #login-form {
         width: 35rem;
     }

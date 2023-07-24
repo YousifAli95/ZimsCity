@@ -1,4 +1,4 @@
-﻿using YousifsProject.Views.Identity;
+﻿using YousifsProject.Views.Identity.ViewModels;
 
 namespace YousifsProject.Services.Interfaces
 {
