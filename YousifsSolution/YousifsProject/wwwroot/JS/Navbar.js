@@ -27,6 +27,5 @@ const navBarLeftSide = document.getElementById("navbar-left-side");
 if (navBarLeftSide && navBarRightSide) {
     const width = navBarRightSide.getBoundingClientRect().width;
     widthAsRem = parseFloat(width) / 10 + "rem"
-    console.log(widthAsRem)
     navBarLeftSide.style.width = widthAsRem;
 }
