@@ -65,7 +65,7 @@ namespace YousifsProject.Services.Implementations
             }
         }
 
-        public async Task<IndexVM[]> GetIndexVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
+        public async Task<IndexPartialVM[]> GetIndexPartialVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
             var userId = GetUserId();
 
@@ -74,7 +74,7 @@ namespace YousifsProject.Services.Implementations
             o.NumberOfFloors <= MaxFloor &&
             o.UserId == userId &&
             roofs.Contains(o.Roof.TypeOfRoof)).
-            Select(o => new IndexVM
+            Select(o => new IndexPartialVM
             {
                 Color = o.Color,
                 Address = o.Address,
@@ -207,6 +207,11 @@ namespace YousifsProject.Services.Implementations
         {
             var userId = GetUserId();
             return cityContext.Houses.Where(h => h.UserId == userId).Count();
+        }
+
+        public IndexVM GetIndexVM()
+        {
+            return new IndexVM { HouseCount = GetHouseCount() };
         }
     }
 }

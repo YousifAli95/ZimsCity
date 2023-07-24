@@ -1,59 +1,60 @@
 ﻿
-const selectElement = document.querySelector('#sort');
-var mySort = ["Address", true]
+const selectElement = document.getElementById('select-filter');
+var sortOn = ["Address", true]
 const filter = document.querySelector(".filter");
 const maxFloorElement = document.querySelector("#maxFloor");
 const minFloorElement = document.querySelector("#minFloor");
-var maxFloor = maxFloorElement.value - 3; // -3 to normalize building height.
-var minFloor = minFloorElement.value - 3;
+var maxFloor = maxFloorElement?.value - 3; // -3 to normalize building height.
+var minFloor = minFloorElement?.value - 3;
 
-var allRoofs = document.querySelectorAll(".myCheck");
+var allRoofs = document.querySelectorAll(".checkbox-filter");
 var myRoofs = "-";
-allRoofs.forEach(o => {
+allRoofs?.forEach(o => {
     myRoofs += " " + o.value;
     o.addEventListener("change", function () {
         if (this.checked) {
             myRoofs += " " + this.value;
-            getPartialView(mySort)
+            getPartialView(sortOn)
         }
         else {
             myRoofs = myRoofs.replace(" " + this.value, "");
-            getPartialView(mySort)
+            getPartialView(sortOn)
         }
     })
 });
 
 
-maxFloorElement.addEventListener("change", (event) => {
+maxFloorElement?.addEventListener("change", (event) => {
     maxFloor = event.target.value - 3;
-    getPartialView(mySort)
+    getPartialView(sortOn)
 });
-minFloorElement.addEventListener("change", (event) => {
+minFloorElement?.addEventListener("change", (event) => {
     minFloor = event.target.value - 3;
-    getPartialView(mySort)
+    getPartialView(sortOn)
 });
 
 
-selectElement.addEventListener('change', (event) => {
+selectElement?.addEventListener('change', (event) => {
     let text = event.target.options[event.target.selectedIndex].text;
     console.log(text);
     if (text.slice(-10) === "Descending") {
-        mySort = [event.target.value, false]
-        getPartialView(mySort);
+        sortOn = [event.target.value, false]
+        getPartialView(sortOn);
     }
     else {
-        mySort = [event.target.value, true]
-        getPartialView(mySort);
+        sortOn = [event.target.value, true]
+        getPartialView(sortOn);
     }
 });
-getPartialView(mySort);
+
+getPartialView(sortOn);
 
 
 function deleteHouse(id) {
     console.log("Deleting");
     fetch(`/delete/${id}`, { method: 'DELETE' })
         .then(async response => console.log(response))
-        .then(() => getPartialView(mySort));
+        .then(() => getPartialView(sortOn));
 }
 
 

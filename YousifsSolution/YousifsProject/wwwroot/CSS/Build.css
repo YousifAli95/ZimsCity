@@ -144,13 +144,9 @@ fieldset {
     }
 
 #NumberOfFloors {
-    font-size: 2rem;
-    cursor: pointer;
-    background: white;
-    color: var(--navbar-color);
-    border: 0.1rem solid var(--navbar-color);
-    font-family: 'Times New Roman';
     padding: 0.5rem;
+    display: block;
+    width: inherit;
 }
 
 @media (max-width: 600px) {

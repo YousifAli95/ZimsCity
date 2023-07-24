@@ -146,17 +146,6 @@ select, option {
     cursor: pointer;
 }
 
-.filter-mouse-over {
-    height: 15rem;
-    padding: 1rem;
-}
-
-
-.filter-mouse-out {
-    height: 0rem;
-    padding: 0rem;
-}
-
 #no-house-div {
     text-align: center;
 }
@@ -203,12 +192,6 @@ select, option {
         animation: loading-animation 1500ms infinite;
     }
 
-.modal-button-div {
-    display: flex;
-}
-
-
-
 @keyframes loading-animation {
     0% {
         content: ".";
@@ -222,3 +205,134 @@ select, option {
         content: "...";
     }
 }
+
+#sort-filter-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 3rem;
+    margin-right: 1rem;
+}
+
+#select-filter {
+    text-align: center;
+    width: 20rem;
+}
+
+#select-filter-div {
+    margin-left: 10rem;
+}
+
+    #sort, #filter-span{
+        box-sizing: border-box;
+        height: 4.5rem;
+    }
+
+.int-filter {
+    padding: 0.5rem;
+    font-size: 2rem;
+    width: 5rem;
+}
+
+
+.int-label {
+    font-size: 2rem;
+    margin: 0 1rem 0 0.4rem;
+}
+
+label {
+    cursor: pointer
+}
+
+.checkboxes label {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+#filter-container {
+    position: relative;
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.sort-filter {
+    width: 20rem;
+}
+
+#filter-span{
+    display: flex;
+    width: inherit;
+    color: inherit;
+    font-family: 'Times New Roman', 'Times New Roman', Times, serif;
+    font-size: inherit;
+    background-color: var(--navbar-color);
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border: 0.3rem solid white;
+}
+
+
+.filter {
+    position: absolute;
+    background: var(--navbar-color);
+    height: 0rem;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem;
+    overflow: hidden;
+    transition: height ease-in 500ms, padding ease-in 500ms;
+    z-index: 2;
+}
+
+.filter input{
+    box-sizing: border-box;
+    height: 4rem;
+    text-align: center;
+}
+
+.checkbox-filter {
+    width: 4rem;
+    margin-right: 1rem;
+}
+
+    .filter > :not(:first-child){
+        margin-top: 1.5rem;
+    }
+.input-filter-div{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+}
+
+#filter-container:hover .filter, #filter-container:focus-visible .filter, #filter-container:focus-within .filter {
+    height: 30rem;
+}
+
+#filter-container:hover #filter-span {
+    border: none;
+}
+
+@media (max-width: 860px) {
+    #sort-filter-container {
+        justify-content: center;
+    }
+    }
+
+    @media (max-width: 600px) {
+        #sort-filter-container {
+            flex-direction: column;
+        }
+
+        #select-filter-div {
+            margin-left: 0;
+            margin-top: 4rem;
+        }
+    }

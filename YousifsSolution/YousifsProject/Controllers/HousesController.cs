@@ -17,7 +17,11 @@ namespace YousifsProject.Controllers
 
         [HttpGet("")]
         [HttpGet("index")]
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            var model = service.GetIndexVM();
+            return View(model);
+        }
 
 
         [HttpGet("indexpartial/")]
@@ -28,14 +32,14 @@ namespace YousifsProject.Controllers
             if (houseCount == 0)
                 return PartialView("~/Views/Houses/PartialViews/_NoHouseIndex.cshtml");
 
-            IndexVM[] model = await service.GetIndexVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            var model = await service.GetIndexPartialVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
             return PartialView("~/Views/Houses/PartialViews/_IndexPartial.cshtml", model);
         }
 
         [HttpGet("Build")]
         public IActionResult BuildHouse()
         {
-            BuildHouseVM model = service.getBuildVM();
+            var model = service.getBuildVM();
             return View(model);
         }
 
@@ -62,7 +66,7 @@ namespace YousifsProject.Controllers
         public IActionResult EditHouse(int id)
         {
 
-            EditHouseVM model = service.GetEditVM(id);
+            var model = service.GetEditVM(id);
             return View(model);
         }
 
