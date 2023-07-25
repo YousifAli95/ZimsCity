@@ -69,7 +69,7 @@ namespace YousifsProject.Services.Implementations
         {
             var userId = GetUserId();
 
-            var model = await cityContext.Houses.OrderBy(o => o.SortingOrder).Where(o =>
+            var model = await cityContext.Houses.Where(o =>
             o.NumberOfFloors >= minFloor &&
             o.NumberOfFloors <= MaxFloor &&
             o.UserId == userId &&
@@ -83,7 +83,9 @@ namespace YousifsProject.Services.Implementations
                 HaveWindow = o.HaveWindow,
                 NumberOfFloors = o.NumberOfFloors,
                 TypeOfRoof = o.Roof.TypeOfRoof,
+                SortingOrder = o.SortingOrder,
                 id = o.Id,
+
             }).ToArrayAsync();
 
             if (isAscending)

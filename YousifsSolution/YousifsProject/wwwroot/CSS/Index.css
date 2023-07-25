@@ -6,6 +6,7 @@
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
+    min-height: 65rem;
 }
 
 
@@ -130,6 +131,13 @@
 
 .navbutton {
     margin-bottom: 2rem;
+}
+
+.house:hover{
+    filter: grayscale(0.5)
+}
+.house:hover svg {
+    fill: grey;
 }
 
 a {

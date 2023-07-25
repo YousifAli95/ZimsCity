@@ -10,6 +10,7 @@
         public bool HaveBalcony { get; set; }
         public bool HaveDoor { get; set; }
         public string Address { get; set; }
+        public int SortingOrder { get; set; }
 
 
 
