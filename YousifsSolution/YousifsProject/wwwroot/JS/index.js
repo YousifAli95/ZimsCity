@@ -1,24 +1,30 @@
-﻿
+﻿////// Variable declarations //////
+
 const selectElement = document.getElementById('select-filter');
-var sortOn = ["Address", true]
-const filter = document.querySelector(".filter");
 const maxFloorElement = document.querySelector("#maxFloor");
 const minFloorElement = document.querySelector("#minFloor");
-var maxFloor = maxFloorElement?.value - 3; // -3 to normalize building height.
-var minFloor = minFloorElement?.value - 3;
+const allRoofs = document.querySelectorAll(".checkbox-filter");
+const filter = document.querySelector(".filter");
+let sortOn = selectElement?.value;
+let selectedOption = selectElement?.options[selectElement.selectedIndex].text
+let isAscending = selectedOption?.slice(-10) === "Descending" ? false : true;
+let maxFloor = maxFloorElement?.value - 3; // -3 to normalize building height.
+let minFloor = minFloorElement?.value - 3;
 
-var allRoofs = document.querySelectorAll(".checkbox-filter");
-var myRoofs = "-";
+let includedRoofs = "-";
+
+////// EventListeners //////
+
 allRoofs?.forEach(o => {
-    myRoofs += " " + o.value;
+    includedRoofs += " " + o.value;
     o.addEventListener("change", function () {
         if (this.checked) {
-            myRoofs += " " + this.value;
-            getPartialView(sortOn)
+            includedRoofs += " " + this.value;
+            getPartialView()
         }
         else {
-            myRoofs = myRoofs.replace(" " + this.value, "");
-            getPartialView(sortOn)
+            includedRoofs = includedRoofs.replace(" " + this.value, "");
+            getPartialView()
         }
     })
 });
@@ -26,11 +32,11 @@ allRoofs?.forEach(o => {
 
 maxFloorElement?.addEventListener("change", (event) => {
     maxFloor = event.target.value - 3;
-    getPartialView(sortOn)
+    getPartialView()
 });
 minFloorElement?.addEventListener("change", (event) => {
     minFloor = event.target.value - 3;
-    getPartialView(sortOn)
+    getPartialView()
 });
 
 
@@ -38,53 +44,70 @@ selectElement?.addEventListener('change', (event) => {
     let text = event.target.options[event.target.selectedIndex].text;
     console.log(text);
     if (text.slice(-10) === "Descending") {
-        sortOn = [event.target.value, false]
-        getPartialView(sortOn);
+        sortOn = event.target.value;
+        isAscending = false
+        getPartialView();
     }
     else {
-        sortOn = [event.target.value, true]
-        getPartialView(sortOn);
+        sortOn = event.target.value;
+        isAscending = true
+        getPartialView();
     }
 });
 
-getPartialView(sortOn);
-
+////// Functions //////
 
 function deleteHouse(id) {
     console.log("Deleting");
-    fetch(`/delete/${id}`, { method: 'DELETE' })
-        .then(async response => console.log(response))
-        .then(() => getPartialView(sortOn));
+    fetch(`/delete/${id}`, { method: 'DELETE' }).
+        then(async response => {
+                    console.log(response);
+                    if (response.ok) {
+                        return response;
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                }).
+        then(() => getPartialView()).
+        then(() => {
+            //Remove sorting and filter elements if all houses has been deleted
+            const containerElement = document.querySelector('.container');
+            if (!containerElement) {
+                const sortAndFilterContainer = document.getElementById("sort-filter-container");
+                sortAndFilterContainer.style.display = "none";
+            }
+        });
 }
 
-
-async function getPartialView(sort) {
+async function getPartialView() {
 
     const superContainer = document.querySelector(".super-container");
-    await fetch(`indexpartial/?sort=${sort[0]}&isAscending=${sort[1]}&minFloor=${minFloor}&maxFloor=${maxFloor}&roofs=${myRoofs}`, { method: "GET" }).
+    const query = `indexpartial/?sort=${sortOn}&isAscending=${isAscending}&minFloor=${minFloor}&maxFloor=${maxFloor}&roofs=${includedRoofs}`
+    console.log(query)
+    await fetch(query, { method: "GET" }).
         then(result => result.text()).
         then(html => {
             superContainer.innerHTML = html;
         });
 
+    makeHousesDraggable();
+}
 
-    // ------ Makes houses draggable ------------ //
+function makeHousesDraggable() {
     const draggables = document.querySelectorAll(".draggable");
     const container = document.querySelector(".container");
     draggables.forEach((draggable) => {
         draggable.addEventListener("dragstart", (e) => {
-            console.log("test");
             draggable.classList.add("dragging");
         });
 
         draggable.addEventListener("dragend", () => {
             draggable.classList.remove("dragging");
-            saveMove()
-            console.log("1")
+            saveMove();
         });
         container.addEventListener("dragover", (e) => {
             e.preventDefault();
-            const afterElement = getDragAfterElement(container, e.clientX);
+            const afterElement = getClosestNonDraggingElement(container, e.clientX);
             const draggable = document.querySelector(".dragging");
 
             if (afterElement == null) {
@@ -94,27 +117,26 @@ async function getPartialView(sort) {
             }
         });
     });
+}
 
-
-    function getDragAfterElement(container, x) {
-        const draggableElements = [
-            ...container.querySelectorAll(".draggable:not(.dragging)"),
-        ];
-        return draggableElements.reduce(
-            (closest, child) => {
-                const box = child.getBoundingClientRect();
-                const offset = x - box.left - box.width / 2;
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                } else {
-                    return closest;
-                }
-            },
-            {
-                offset: Number.NEGATIVE_INFINITY,
+function getClosestNonDraggingElement(container, x) {
+    const draggableElements = [
+        ...container.querySelectorAll(".draggable:not(.dragging)"),
+    ];
+    return draggableElements.reduce(
+        (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = x - box.left - box.width / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
             }
-        ).element;
-    }
+        },
+        {
+            offset: Number.NEGATIVE_INFINITY,
+        }
+    ).element;
 }
 
 function getMenu(id) {
@@ -122,30 +144,28 @@ function getMenu(id) {
     menuElement.classList.toggle("house-nav-height-10")
 }
 
-function saveMove() {
+async function saveMove() {
     let ids = [...document.querySelectorAll(".house")].map((o) => o.dataset.id);
     query = "/saveMovings/?";
-    for (var i = 0; i < ids.length; i++) {
+    for (let i = 0; i < ids.length; i++) {
         query += `idArray=${ids[i]}`
         if (i != ids.length - 1) {
             query += "&"
         }
     }
     console.log(query);
-    fetch(query, { method: "POST" })
+
+    await fetch(query, { method: "POST" })
+    const optionValueToSelect = 'SortingOrder';
+
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === optionValueToSelect) {
+            selectElement.options[i].selected = true;
+            break;
+        }
+    }
 }
 
-function filterMouseOut() {
-    filter.classList.remove("filter-mouse-over")
-    filter.classList.add("filter-mouse-out")
-}
 
-function filterMouseOver() {
-    filter.classList.add("filter-mouse-over")
-    filter.classList.remove("filter-mouse-out")
-}
-
-
-
-
-
+////// Code Starts Here //////
+getPartialView();
