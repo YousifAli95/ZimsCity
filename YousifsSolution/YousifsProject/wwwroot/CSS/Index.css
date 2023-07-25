@@ -133,12 +133,13 @@
     margin-bottom: 2rem;
 }
 
-.house:hover{
+.house:hover {
     filter: grayscale(0.5)
 }
-.house:hover svg {
-    fill: grey;
-}
+
+    .house:hover svg {
+        fill: grey;
+    }
 
 a {
     text-decoration: none;
@@ -230,10 +231,10 @@ select, option {
     margin-left: 10rem;
 }
 
-    #sort, #filter-span{
-        box-sizing: border-box;
-        height: 4.5rem;
-    }
+#sort, #filter-span {
+    box-sizing: border-box;
+    height: 4.5rem;
+}
 
 .int-filter {
     padding: 0.5rem;
@@ -267,7 +268,7 @@ label {
     width: 20rem;
 }
 
-#filter-span{
+#filter-span {
     display: flex;
     width: inherit;
     color: inherit;
@@ -296,21 +297,22 @@ label {
     z-index: 2;
 }
 
-.filter input{
-    box-sizing: border-box;
-    height: 4rem;
-    text-align: center;
-}
+    .filter input {
+        box-sizing: border-box;
+        height: 4rem;
+        text-align: center;
+    }
 
 .checkbox-filter {
     width: 4rem;
     margin-right: 1rem;
 }
 
-    .filter > :not(:first-child){
-        margin-top: 1.5rem;
-    }
-.input-filter-div{
+.filter > :not(:first-child) {
+    margin-top: 1.5rem;
+}
+
+.input-filter-div {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -331,15 +333,16 @@ label {
     #sort-filter-container {
         justify-content: center;
     }
+}
+
+@media (max-width: 600px) {
+    #sort-filter-container {
+        flex-direction: column;
+        align-items: center;
     }
 
-    @media (max-width: 600px) {
-        #sort-filter-container {
-            flex-direction: column;
-        }
-
-        #select-filter-div {
-            margin-left: 0;
-            margin-top: 4rem;
-        }
+    #select-filter-div {
+        margin-left: 0;
+        margin-top: 4rem;
     }
+}
