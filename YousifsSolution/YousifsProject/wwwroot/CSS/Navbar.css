@@ -101,69 +101,12 @@ navbar {
     :root {
         --navbar-height: 22.7rem;
     }
-}
 
-/*.modal-back {
-    position: fixed;
-    width: 100vw;
-    height: 200vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 12;
-    transform: translateY(calc(-1 * var(--navbar-height)));
-    overflow: hidden;
-    display: none;
-    cursor: pointer;
-}
-
-.modal-button-div {
-    display: flex;
-}
-
-    .modal-button-div > * {
-        font-family: Arial, Helvetica, sans-serif;
-        width: 24rem;
-        cursor: pointer;
-        margin: 2rem;
-        text-align: center;
-        box-sizing: border-box;
+    navbar h1 {
+        font-size: 4rem;
     }
 
-.modal {
-    display: flex;
-    cursor: auto;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 2.5rem;
-    width: 59rem;
-    padding: 2rem 3rem;
-    height: 22rem;
-    border-radius: 0.2rem;
-    background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#close-button {
-    color: grey;
-    margin: 0;
-    margin-left: auto;
-    cursor: pointer;
-    font-size: 2.5rem;
-    text-align: right;
-    background-color: white;
-    border: none;
-}
-
-    #close-button:hover {
-        color: black;
+    #house-svg {
+        height: 3rem;
     }
-
-    
-.modal-button-div {
-    display: flex;
 }
-*/
-
