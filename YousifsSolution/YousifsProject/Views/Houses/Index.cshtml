@@ -13,25 +13,6 @@
     <script defer src="https://kit.fontawesome.com/2381c935ba.js" crossorigin="anonymous"></script>
 }
 
-@*@section Navbar{
-    <div class="divspan" onclick="showModal()">
-        <span class="navspan"> Destroy All Houses</span>
-    </div>
-}
-
-<div class="modal-back">
-    <div class="modal">
-    <button onclick="hideModal()" id="close-button">x</button>
-        <p>Are you sure that you want to destroy all houses?</p>
-        <div class="modal-button-div">
-            <a class="no-house-a" asp-controller="Houses" asp-action="DeleteAll">Delete all houses</a>
-
-            <input class="no-house-a" type="button" onclick="hideModal()" value="Don't delete Houses" />
-        </div>
-    </div>
-</div>
-*@
-
 @if (Model.HouseCount != 0)
 {
     <div id="sort-filter-container">

@@ -168,4 +168,12 @@ input:-webkit-autofill {
     .login-button {
         width: 26rem;
     }
+
+    .form-div label {
+        font-size: 1.5rem;
+    }
+
+    :root {
+        --navbar-height: 9rem;
+    }
 }
