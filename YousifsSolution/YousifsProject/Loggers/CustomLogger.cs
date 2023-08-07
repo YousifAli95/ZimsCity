@@ -6,7 +6,7 @@ namespace YousifsProject.Loggers
     public class CustomLogger
     {
         private readonly ILogger<CustomLogger> _logger;
-        private readonly TimeZoneInfo _swedenTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Stockholm");
+        private readonly TimeZoneInfo _swedenTimeZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time"); // or "Central Europe Standard Time"
 
         public CustomLogger(ILogger<CustomLogger> logger)
         {
