@@ -9,17 +9,17 @@ namespace YousifsProject.Controllers
     public class HousesController : Controller
     {
 
-        IHouseService service;
+        readonly IHouseService _houseService;
         public HousesController(IHouseService service)
         {
-            this.service = service;
+            this._houseService = service;
         }
 
         [HttpGet("")]
         [HttpGet("index")]
         public IActionResult Index()
         {
-            var model = service.GetIndexVM();
+            var model = _houseService.GetIndexVM();
             return View(model);
         }
 
@@ -27,19 +27,19 @@ namespace YousifsProject.Controllers
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
-            var houseCount = service.GetHouseCount();
+            var houseCount = _houseService.GetHouseCount();
 
             if (houseCount == 0)
                 return PartialView("~/Views/Houses/PartialViews/_NoHouseIndex.cshtml");
 
-            var model = await service.GetIndexPartialVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
+            var model = await _houseService.GetIndexPartialVMAsync(sort, isAscending, roofs, minFloor, MaxFloor);
             return PartialView("~/Views/Houses/PartialViews/_IndexPartial.cshtml", model);
         }
 
         [HttpGet("Build")]
         public IActionResult BuildHouse()
         {
-            var model = service.getBuildVM();
+            var model = _houseService.getBuildVM();
             return View(model);
         }
 
@@ -48,16 +48,16 @@ namespace YousifsProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(service.getBuildVM());
+                return View(_houseService.getBuildVM());
             }
 
-            if (!service.IsAddressAvailable(model.Address, -1))
+            if (!_houseService.IsAddressAvailable(model.Address, -1))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(service.getBuildVM());
+                return View(_houseService.getBuildVM());
             }
 
-            service.AddHouse(model);
+            _houseService.AddHouse(model);
             return RedirectToAction(nameof(Index));
         }
 
@@ -66,7 +66,7 @@ namespace YousifsProject.Controllers
         public IActionResult EditHouse(int id)
         {
 
-            var model = service.GetEditVM(id);
+            var model = _houseService.GetEditVM(id);
             return View(model);
         }
 
@@ -75,16 +75,16 @@ namespace YousifsProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(service.GetEditVM(id));
+                return View(_houseService.GetEditVM(id));
             }
 
-            if (!service.IsAddressAvailable(model.Address, id))
+            if (!_houseService.IsAddressAvailable(model.Address, id))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(service.GetEditVM(id));
+                return View(_houseService.GetEditVM(id));
             }
 
-            service.EditHouse(model, id);
+            _houseService.EditHouse(model, id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -93,13 +93,13 @@ namespace YousifsProject.Controllers
         {
             try
             {
-                var houseToDelete = service.GetHouseById(id);
+                var houseToDelete = _houseService.GetHouseById(id);
                 if (houseToDelete == null)
                 {
                     return NotFound($"House with Id = {id} not found");
                 }
 
-                service.DeleteHouse(houseToDelete);
+                _houseService.DeleteHouse(houseToDelete);
                 return Ok();
             }
 
@@ -113,14 +113,14 @@ namespace YousifsProject.Controllers
         [HttpGet("DeleteAll")]
         public IActionResult DeleteAll()
         {
-            service.DeleteAllHouses();
+            _houseService.DeleteAllHouses();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost("/saveMovings/")]
         public IActionResult SaveMovings(int[] idArray)
         {
-            service.ReorderHouses(idArray);
+            _houseService.ReorderHouses(idArray);
             return Ok();
         }
     }

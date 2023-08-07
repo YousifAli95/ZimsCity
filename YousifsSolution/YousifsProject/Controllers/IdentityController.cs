@@ -8,11 +8,11 @@ namespace YousifsProject.Controllers
     [Route("account")]
     public class IdentityController : Controller
     {
-        readonly IIdentityService service;
+        readonly IIdentityService _identityService;
 
         public IdentityController(IIdentityService service)
         {
-            this.service = service;
+            this._identityService = service;
         }
 
         [HttpGet("login")]
@@ -33,7 +33,7 @@ namespace YousifsProject.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var loginSucceded = await service.TryLoginUserAsync(model);
+            var loginSucceded = await _identityService.TryLoginUserAsync(model);
 
             if (!loginSucceded)
             {
@@ -63,7 +63,7 @@ namespace YousifsProject.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var errorMessage = await service.TryRegisterUserAsync(model);
+            var errorMessage = await _identityService.TryRegisterUserAsync(model);
             if (errorMessage != null)
             {
                 if (errorMessage.Contains("Password", StringComparison.OrdinalIgnoreCase))
@@ -80,7 +80,7 @@ namespace YousifsProject.Controllers
         [HttpGet("Signout")]
         public async Task<ActionResult> Signout()
         {
-            await service.SignOutUserAsync();
+            await _identityService.SignOutUserAsync();
             return RedirectToAction(nameof(Login), nameof(IdentityController).Replace("Controller", ""));
         }
 

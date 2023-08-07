@@ -8,12 +8,12 @@ namespace YousifsProject.Services.Implementations
 
     public class IdentityServiceDB : IIdentityService
     {
-        readonly UserManager<IdentityUser> userManager;
-        readonly SignInManager<IdentityUser> signInManager;
+        readonly UserManager<IdentityUser> _userManager;
+        readonly SignInManager<IdentityUser> _signInManager;
         public IdentityServiceDB(CityContext cityContext, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         public async Task<string?> TryRegisterUserAsync(SignupVM model)
@@ -23,11 +23,11 @@ namespace YousifsProject.Services.Implementations
                 UserName = model.Username,
             };
 
-            IdentityResult createResult = await userManager.CreateAsync(user, model.Password);
+            IdentityResult createResult = await _userManager.CreateAsync(user, model.Password);
 
             if (createResult.Succeeded)
             {
-                await signInManager.PasswordSignInAsync(
+                await _signInManager.PasswordSignInAsync(
                 model.Username,
                 model.Password,
                 isPersistent: false,
@@ -43,12 +43,12 @@ namespace YousifsProject.Services.Implementations
 
         public async Task SignOutUserAsync()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<bool> TryLoginUserAsync(LoginVM model)
         {
-            var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
 
             return result.Succeeded;
         }

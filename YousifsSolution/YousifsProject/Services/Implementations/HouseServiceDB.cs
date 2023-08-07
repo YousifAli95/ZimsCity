@@ -10,27 +10,27 @@ namespace YousifsProject.Services.Implementations
 
     public class HouseServiceDB : IHouseService
     {
-        CityContext cityContext;
-        IHttpContextAccessor accessor;
+        readonly CityContext _cityContext;
+        readonly IHttpContextAccessor _accessor;
 
         public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor)
         {
-            this.cityContext = cityContext;
-            this.accessor = accessor;
+            this._cityContext = cityContext;
+            this._accessor = accessor;
         }
 
         public void AddHouse(BuildHouseVM model)
         {
             int ThisSortingOrder = 1;
-            if (cityContext.Houses.Count() > 0)
+            if (_cityContext.Houses.Count() > 0)
             {
-                ThisSortingOrder = cityContext.Houses.Max(o => o.SortingOrder) + 1;
+                ThisSortingOrder = _cityContext.Houses.Max(o => o.SortingOrder) + 1;
             }
 
             var roofId = GetRoofId(model.TypeOfRoof);
             string userId = GetUserId();
 
-            cityContext.Houses.Add(new House
+            _cityContext.Houses.Add(new House
             {
                 NumberOfFloors = model.NumberOfFloors,
                 Color = model.Color,
@@ -42,19 +42,19 @@ namespace YousifsProject.Services.Implementations
                 SortingOrder = ThisSortingOrder,
                 UserId = userId
             });
-            cityContext.SaveChanges();
+            _cityContext.SaveChanges();
         }
 
         private string GetUserId()
         {
-            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public bool IsAddressAvailable(string address, int id)
         {
             var userId = GetUserId();
 
-            var house = cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
+            var house = _cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
             if (house == null)
             {
                 return true;
@@ -69,7 +69,7 @@ namespace YousifsProject.Services.Implementations
         {
             var userId = GetUserId();
 
-            var model = await cityContext.Houses.Where(o =>
+            var model = await _cityContext.Houses.Where(o =>
             o.NumberOfFloors >= minFloor &&
             o.NumberOfFloors <= MaxFloor &&
             o.UserId == userId &&
@@ -100,7 +100,7 @@ namespace YousifsProject.Services.Implementations
 
         public EditHouseVM GetEditVM(int id)
         {
-            House house = cityContext.Houses.SingleOrDefault(o => o.Id == id);
+            House house = _cityContext.Houses.SingleOrDefault(o => o.Id == id);
             return new EditHouseVM
             {
                 Address = house.Address,
@@ -111,27 +111,27 @@ namespace YousifsProject.Services.Implementations
                 HaveWindow = house.HaveWindow,
                 NumberOfFloors = house.NumberOfFloors,
                 FloorArray = CreateFloorArray(),
-                TypeOfRoofsArray = cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray(),
-                TypeOfRoof = cityContext.Roofs.Find(house.RoofId).TypeOfRoof
+                TypeOfRoofsArray = _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray(),
+                TypeOfRoof = _cityContext.Roofs.Find(house.RoofId).TypeOfRoof
             };
         }
 
         public void DeleteAllHouses()
         {
             var userId = GetUserId();
-            var housesToDelete = cityContext.Houses.Where(h => h.UserId == userId);
+            var housesToDelete = _cityContext.Houses.Where(h => h.UserId == userId);
 
-            cityContext.Houses.RemoveRange(housesToDelete);
-            cityContext.SaveChanges();
+            _cityContext.Houses.RemoveRange(housesToDelete);
+            _cityContext.SaveChanges();
         }
 
         public void ReorderHouses(int[] idArray)
         {
             for (int i = 0; i < idArray.Length; i++)
             {
-                cityContext.Houses.Find(idArray[i]).SortingOrder = i;
+                _cityContext.Houses.Find(idArray[i]).SortingOrder = i;
             }
-            cityContext.SaveChanges();
+            _cityContext.SaveChanges();
         }
 
         public void DeleteHouse(House house)
@@ -142,21 +142,21 @@ namespace YousifsProject.Services.Implementations
                 throw new UnauthorizedAccessException("You don't have permission to delete this house.");
             }
 
-            cityContext.Remove(house);
-            cityContext.SaveChanges();
+            _cityContext.Remove(house);
+            _cityContext.SaveChanges();
         }
 
         public void EditHouse(EditHouseVM model, int id)
         {
-            House house = cityContext.Houses.Find(id);
+            House house = _cityContext.Houses.Find(id);
             house.Color = model.Color;
-            house.RoofId = cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof == model.TypeOfRoof).Id;
+            house.RoofId = _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof == model.TypeOfRoof).Id;
             house.Address = model.Address;
             house.HaveBalcony = model.HaveBalcony;
             house.HaveDoor = model.HaveDoor;
             house.HaveWindow = model.HaveWindow;
             house.NumberOfFloors = model.NumberOfFloors;
-            cityContext.SaveChanges();
+            _cityContext.SaveChanges();
         }
 
         public BuildHouseVM getBuildVM()
@@ -179,27 +179,27 @@ namespace YousifsProject.Services.Implementations
 
         public string[] GetRoofsArray()
         {
-            return cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray();
+            return _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray();
         }
 
         public House? GetHouseById(int id)
         {
-            return cityContext.Houses.SingleOrDefault(o => o.Id == id);
+            return _cityContext.Houses.SingleOrDefault(o => o.Id == id);
         }
 
         private int GetRoofId(string typeOfRoof)
         {
-            var RoofId = cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof))?.Id;
+            var RoofId = _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof))?.Id;
 
             if (RoofId == null)
             {
-                cityContext.Roofs.AddRange(
+                _cityContext.Roofs.AddRange(
                      new Roof { TypeOfRoof = "Flat Roof" },
                      new Roof { TypeOfRoof = "Dome Roof" },
                      new Roof { TypeOfRoof = "Triangle Roof" }
                     );
-                cityContext.SaveChanges();
-                return cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof)).Id;
+                _cityContext.SaveChanges();
+                return _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof)).Id;
             }
             else
                 return (int)RoofId;
@@ -208,7 +208,7 @@ namespace YousifsProject.Services.Implementations
         public int GetHouseCount()
         {
             var userId = GetUserId();
-            return cityContext.Houses.Where(h => h.UserId == userId).Count();
+            return _cityContext.Houses.Where(h => h.UserId == userId).Count();
         }
 
         public IndexVM GetIndexVM()
