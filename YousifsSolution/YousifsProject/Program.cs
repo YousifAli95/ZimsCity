@@ -14,6 +14,7 @@ namespace YousifsProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Logging.ClearProviders();
 
             builder.Services.AddScoped<CustomLogger>();
             builder.Services.AddControllersWithViews();
