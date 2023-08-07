@@ -32,7 +32,7 @@ namespace YousifsProject
 
                     if (string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase))
                     {
-                        environment = "ProductionConnection";
+                        typeOfConnection = "ProductionConnection";
                     }
                     else
                     {
