@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using YousifsProject.Loggers;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Interfaces;
 using YousifsProject.Views.Houses.ViewModels;
+
 
 namespace YousifsProject.Services.Implementations
 {
@@ -12,11 +14,13 @@ namespace YousifsProject.Services.Implementations
     {
         readonly CityContext _cityContext;
         readonly IHttpContextAccessor _accessor;
+        private readonly CustomLogger _logger;
 
-        public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor)
+        public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor, CustomLogger logger)
         {
-            this._cityContext = cityContext;
-            this._accessor = accessor;
+            _cityContext = cityContext;
+            _accessor = accessor;
+            _logger = logger;
         }
 
         public void AddHouse(BuildHouseVM model)
@@ -65,13 +69,21 @@ namespace YousifsProject.Services.Implementations
             }
         }
 
-        public async Task<IndexPartialVM[]> GetIndexPartialVMAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
+        public async Task<IndexPartialVM[]> GetIndexPartialVMAsync(string sort, bool isAscending, string roofs, int minFloor, int maxFloor)
         {
-            var userId = GetUserId();
+            _logger.LogArguments(LogLevel.Debug, nameof(GetIndexPartialVMAsync), new
+            {
+                Sort = sort,
+                IsAscending = isAscending,
+                Roofs = roofs,
+                MinFloor = minFloor,
+                MaxFloor = maxFloor
+            });
 
+            var userId = GetUserId();
             var model = await _cityContext.Houses.Where(o =>
             o.NumberOfFloors >= minFloor &&
-            o.NumberOfFloors <= MaxFloor &&
+            o.NumberOfFloors <= maxFloor &&
             o.UserId == userId &&
             roofs.Contains(o.Roof.TypeOfRoof)).
             Select(o => new IndexPartialVM

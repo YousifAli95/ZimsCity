@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using YousifsProject.Loggers;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Implementations;
 using YousifsProject.Services.Interfaces;
@@ -13,6 +14,8 @@ namespace YousifsProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddScoped<CustomLogger>();
             builder.Services.AddControllersWithViews();
             var serviceImplementation = builder.Configuration["ServiceImplementation"];
 
@@ -22,8 +25,19 @@ namespace YousifsProject
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
                     builder.Services.AddTransient<IIdentityService, IdentityServiceDB>();
 
+                    var typeOfConnection = "DefaultConnection";
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                    var typeOfConnection = string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase) ? "ProductionConnection" : "DefaultConnection";
+
+
+                    if (string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase))
+                    {
+                        environment = "ProductionConnection";
+                    }
+                    else
+                    {
+                        builder.Logging.AddConsole();
+                    }
+
                     var connectionString = builder.Configuration.GetConnectionString(typeOfConnection);
                     builder.Services.AddDbContext<CityContext>(o => o.UseSqlServer(connectionString));
                     ConfigureIdentity(builder, connectionString);
