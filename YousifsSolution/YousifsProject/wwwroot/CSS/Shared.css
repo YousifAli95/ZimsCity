@@ -6,7 +6,7 @@
     --navbar-height: 12.5rem;
     --navbar-height-small-screen: 22.7rem;
     --margin-left-body-conatiner: 3rem;
-    --footer-height: 10rem;
+    --footer-height: 5rem;
 }
 html {
     margin: 0;
@@ -31,9 +31,10 @@ body {
 
 footer {
     height: var(--footer-height);
-    margin-left: var(--margin-left-body-conatiner);
+    margin: 1rem var(--margin-left-body-conatiner);
     font-size: 2rem;
     margin-top: 1rem;
+    text-align: right;
 }
 
 .field-validation-error {
