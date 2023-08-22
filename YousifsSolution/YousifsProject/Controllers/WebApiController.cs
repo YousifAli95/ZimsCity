@@ -17,21 +17,19 @@ namespace YousifsProject.Controllers
 
         [HttpPatch]
         [Route("save-movings")]
-        [ValidateAntiForgeryToken]
         public IActionResult SaveMovings(int[] idArray)
         {
             return RunApiFunction(() => _webApiService.ReorderHouses(idArray), successsMessage: "House order saved successfully");
         }
 
         [HttpDelete("delete/{id}")]
-        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             return RunApiFunction(() => _webApiService.DeleteHouse(id), successsMessage: "House deleted successfully");
         }
 
 
-        [HttpGet("DeleteAll")]
+        [HttpDelete("DeleteAll")]
         public IActionResult DeleteAllHouses()
         {
             return RunApiFunction(() => _webApiService.DeleteAllHouses(), successsMessage: "All user houses deleted successfully");

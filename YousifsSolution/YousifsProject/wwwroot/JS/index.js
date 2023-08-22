@@ -57,26 +57,40 @@ selectElement?.addEventListener('change', (event) => {
 
 ////// Functions //////
 
-function deleteHouse(id) {
-    console.log("Deleting");
-    fetch(`/delete/${id}`, { method: 'DELETE' }).
-        then(async response => {
-            console.log(response);
-            if (response.ok) {
-                return response;
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        }).
-        then(() => getPartialView()).
-        then(() => {
-            //Remove sorting and filter elements if all houses has been deleted
-            const containerElement = document.querySelector('.container');
-            if (!containerElement) {
-                const sortAndFilterContainer = document.getElementById("sort-filter-container");
-                sortAndFilterContainer.style.display = "none";
-            }
+async function deleteHouse(id) {
+    try {
+        const query = `api/delete/${id}`
+        // Get the anti-forgery token from a hidden input field
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        const headers = new Headers({
+            'RequestVerificationToken': token
         });
+
+        const fetchConfig = {
+            method: 'DELETE',
+            headers: headers,
+        };
+
+        const response = await fetch(query, fetchConfig);
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+
+        result = await response.json();
+        console.log(result.message)
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+    await getPartialView();
+    //Remove sorting and filter elements if all houses has been deleted
+    const containerElement = document.querySelector('.container');
+    if (!containerElement) {
+        const sortAndFilterContainer = document.getElementById("sort-filter-container");
+        sortAndFilterContainer.style.display = "none";
+    }
 }
 
 async function getPartialView() {
