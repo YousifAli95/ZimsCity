@@ -39,7 +39,7 @@ namespace YousifsProject.Controllers
         [HttpGet("Build")]
         public IActionResult BuildHouse()
         {
-            var model = _houseService.getBuildVM();
+            var model = _houseService.GetBuildHouseVM();
             return View(model);
         }
 
@@ -48,13 +48,13 @@ namespace YousifsProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(_houseService.getBuildVM());
+                return View(_houseService.GetBuildHouseVM());
             }
 
             if (!_houseService.IsAddressAvailable(model.Address, -1))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(_houseService.getBuildVM());
+                return View(_houseService.GetBuildHouseVM());
             }
 
             _houseService.AddHouse(model);
@@ -66,7 +66,7 @@ namespace YousifsProject.Controllers
         public IActionResult EditHouse(int id)
         {
 
-            var model = _houseService.GetEditVM(id);
+            var model = _houseService.GetEditHouseVM(id);
             return View(model);
         }
 
@@ -75,53 +75,17 @@ namespace YousifsProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(_houseService.GetEditVM(id));
+                return View(_houseService.GetEditHouseVM(id));
             }
 
             if (!_houseService.IsAddressAvailable(model.Address, id))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(_houseService.GetEditVM(id));
+                return View(_houseService.GetEditHouseVM(id));
             }
 
             _houseService.EditHouse(model, id);
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                var houseToDelete = _houseService.GetHouseById(id);
-                if (houseToDelete == null)
-                {
-                    return NotFound($"House with Id = {id} not found");
-                }
-
-                _houseService.DeleteHouse(houseToDelete);
-                return Ok();
-            }
-
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error deleting house");
-            }
-        }
-
-        [HttpGet("DeleteAll")]
-        public IActionResult DeleteAll()
-        {
-            _houseService.DeleteAllHouses();
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost("/saveMovings/")]
-        public IActionResult SaveMovings(int[] idArray)
-        {
-            _houseService.ReorderHouses(idArray);
-            return Ok();
         }
     }
 

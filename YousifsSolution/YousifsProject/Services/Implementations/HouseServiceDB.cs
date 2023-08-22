@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using YousifsProject.Loggers;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Interfaces;
+using YousifsProject.Utils;
 using YousifsProject.Views.Houses.ViewModels;
 
 
@@ -13,14 +13,15 @@ namespace YousifsProject.Services.Implementations
     public class HouseServiceDB : IHouseService
     {
         readonly CityContext _cityContext;
-        readonly IHttpContextAccessor _accessor;
-        private readonly CustomLogger _logger;
+        readonly CustomLogger _logger;
+        readonly ServiceUtilsDB _serviceUtilsDB;
 
-        public HouseServiceDB(CityContext cityContext, IHttpContextAccessor accessor, CustomLogger logger)
+
+        public HouseServiceDB(CityContext cityContext, ServiceUtilsDB serviceUtilsDB, CustomLogger logger)
         {
             _cityContext = cityContext;
-            _accessor = accessor;
             _logger = logger;
+            _serviceUtilsDB = serviceUtilsDB;
         }
 
         public void AddHouse(BuildHouseVM model)
@@ -32,7 +33,7 @@ namespace YousifsProject.Services.Implementations
             }
 
             var roofId = GetRoofId(model.TypeOfRoof);
-            string userId = GetUserId();
+            string userId = _serviceUtilsDB.GetUserId();
 
             _cityContext.Houses.Add(new House
             {
@@ -49,14 +50,9 @@ namespace YousifsProject.Services.Implementations
             _cityContext.SaveChanges();
         }
 
-        private string GetUserId()
-        {
-            return _accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        }
-
         public bool IsAddressAvailable(string address, int id)
         {
-            var userId = GetUserId();
+            var userId = _serviceUtilsDB.GetUserId();
 
             var house = _cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
             if (house == null)
@@ -80,7 +76,7 @@ namespace YousifsProject.Services.Implementations
                 MaxFloor = maxFloor
             });
 
-            var userId = GetUserId();
+            var userId = _serviceUtilsDB.GetUserId();
             var model = await _cityContext.Houses.Where(o =>
             o.NumberOfFloors >= minFloor &&
             o.NumberOfFloors <= maxFloor &&
@@ -110,7 +106,7 @@ namespace YousifsProject.Services.Implementations
             }
         }
 
-        public EditHouseVM GetEditVM(int id)
+        public EditHouseVM GetEditHouseVM(int id)
         {
             House house = _cityContext.Houses.SingleOrDefault(o => o.Id == id);
             return new EditHouseVM
@@ -128,36 +124,6 @@ namespace YousifsProject.Services.Implementations
             };
         }
 
-        public void DeleteAllHouses()
-        {
-            var userId = GetUserId();
-            var housesToDelete = _cityContext.Houses.Where(h => h.UserId == userId);
-
-            _cityContext.Houses.RemoveRange(housesToDelete);
-            _cityContext.SaveChanges();
-        }
-
-        public void ReorderHouses(int[] idArray)
-        {
-            for (int i = 0; i < idArray.Length; i++)
-            {
-                _cityContext.Houses.Find(idArray[i]).SortingOrder = i;
-            }
-            _cityContext.SaveChanges();
-        }
-
-        public void DeleteHouse(House house)
-        {
-            // Check if the current user has the necessary permission to delete the house
-            if (house.UserId != GetUserId())
-            {
-                throw new UnauthorizedAccessException("You don't have permission to delete this house.");
-            }
-
-            _cityContext.Remove(house);
-            _cityContext.SaveChanges();
-        }
-
         public void EditHouse(EditHouseVM model, int id)
         {
             House house = _cityContext.Houses.Find(id);
@@ -171,7 +137,7 @@ namespace YousifsProject.Services.Implementations
             _cityContext.SaveChanges();
         }
 
-        public BuildHouseVM getBuildVM()
+        public BuildHouseVM GetBuildHouseVM()
         {
             BuildHouseVM buildVM = new BuildHouseVM();
             SelectListItem[] selectListItems = CreateFloorArray();
@@ -194,11 +160,6 @@ namespace YousifsProject.Services.Implementations
             return _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray();
         }
 
-        public House? GetHouseById(int id)
-        {
-            return _cityContext.Houses.SingleOrDefault(o => o.Id == id);
-        }
-
         private int GetRoofId(string typeOfRoof)
         {
             var RoofId = _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof))?.Id;
@@ -219,7 +180,7 @@ namespace YousifsProject.Services.Implementations
 
         public int GetHouseCount()
         {
-            var userId = GetUserId();
+            var userId = _serviceUtilsDB.GetUserId();
             return _cityContext.Houses.Where(h => h.UserId == userId).Count();
         }
 

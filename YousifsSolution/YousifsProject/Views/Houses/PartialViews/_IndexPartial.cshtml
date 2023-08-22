@@ -1,7 +1,9 @@
 ﻿@using YousifsProject.Views.Houses
 @model IndexPartialVM[]
 
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 <div>
+@Html.AntiForgeryToken()
     <div class="container">
         @foreach (var house in @Model)
         {

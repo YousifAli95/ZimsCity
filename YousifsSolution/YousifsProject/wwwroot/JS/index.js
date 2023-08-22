@@ -61,13 +61,13 @@ function deleteHouse(id) {
     console.log("Deleting");
     fetch(`/delete/${id}`, { method: 'DELETE' }).
         then(async response => {
-                    console.log(response);
-                    if (response.ok) {
-                        return response;
-                    } else {
-                        throw new Error('Network response was not ok.');
-                    }
-                }).
+            console.log(response);
+            if (response.ok) {
+                return response;
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        }).
         then(() => getPartialView()).
         then(() => {
             //Remove sorting and filter elements if all houses has been deleted
@@ -145,27 +145,41 @@ function getMenu(id) {
 }
 
 async function saveMove() {
-    let ids = [...document.querySelectorAll(".house")].map((o) => o.dataset.id);
-    query = "/saveMovings/?";
-    for (let i = 0; i < ids.length; i++) {
-        query += `idArray=${ids[i]}`
-        if (i != ids.length - 1) {
-            query += "&"
-        }
-    }
-    console.log(query);
+    try {
+        const query = "api/save-movings"
+        const houseIdArray = [...document.querySelectorAll(".house")].map((o) => o.dataset.id);
+        // Get the anti-forgery token from a hidden input field
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
-    await fetch(query, { method: "POST" })
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'RequestVerificationToken': token
+        });
+
+        const fetchConfig = {
+            method: 'PATCH',
+            headers: headers,
+            body: JSON.stringify(houseIdArray)
+        };
+
+        const response = await fetch(query, fetchConfig);
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+
+        result = await response.json();
+        console.log(result.message)
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+    // Set the select option to 'Custom order'
     const optionValueToSelect = 'SortingOrder';
-
-    for (let i = 0; i < selectElement.options.length; i++) {
-        if (selectElement.options[i].value === optionValueToSelect) {
-            selectElement.options[i].selected = true;
-            break;
-        }
-    }
+    const selectedIndex = Array.from(selectElement.options).findIndex(option => option.value === optionValueToSelect);
+    selectElement.selectedIndex = selectedIndex;
 }
 
 
 ////// Code Starts Here //////
-getPartialView();
+getPartialView();   

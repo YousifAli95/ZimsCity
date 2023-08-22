@@ -1,11 +1,13 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using YousifsProject.Loggers;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Implementations;
 using YousifsProject.Services.Interfaces;
+using YousifsProject.Utils;
 
 namespace YousifsProject
 {
@@ -14,15 +16,23 @@ namespace YousifsProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Logging.ClearProviders();
 
+            builder.Logging.ClearProviders();
             builder.Services.AddScoped<CustomLogger>();
-            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllersWithViews(o =>
+            {
+                // Adds antiforgery tokens for all unsafe HTTP methods (PUT, POST, PATCH etc).
+                o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             var serviceImplementation = builder.Configuration["ServiceImplementation"];
 
             switch (serviceImplementation)
             {
                 case "HouseServiceDB":
+                    builder.Services.AddTransient<ServiceUtilsDB>();
+                    builder.Services.AddTransient<IWebApiService, WebApiServiceDB>();
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
                     builder.Services.AddTransient<IIdentityService, IdentityServiceDB>();
 
@@ -49,8 +59,8 @@ namespace YousifsProject
             }
 
             var app = builder.Build();
-            app.UseRouting();
 
+            app.UseRouting();
             switch (serviceImplementation)
             {
                 case "HouseServiceDB":
