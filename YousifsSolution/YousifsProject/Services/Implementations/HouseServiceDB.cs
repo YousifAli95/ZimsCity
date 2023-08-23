@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using YousifsProject.Exceptions;
 using YousifsProject.Loggers;
 using YousifsProject.Models.Entities;
 using YousifsProject.Services.Interfaces;
@@ -24,44 +24,21 @@ namespace YousifsProject.Services.Implementations
             _serviceUtilsDB = serviceUtilsDB;
         }
 
-        public void AddHouse(BuildHouseVM model)
-        {
-            int ThisSortingOrder = 1;
-            if (_cityContext.Houses.Count() > 0)
-            {
-                ThisSortingOrder = _cityContext.Houses.Max(o => o.SortingOrder) + 1;
-            }
-
-            var roofId = GetRoofId(model.TypeOfRoof);
-            string userId = _serviceUtilsDB.GetUserId();
-
-            _cityContext.Houses.Add(new House
-            {
-                NumberOfFloors = model.NumberOfFloors,
-                Color = model.Color,
-                HaveBalcony = model.HaveBalcony,
-                HaveDoor = model.HaveDoor,
-                HaveWindow = model.HaveWindow,
-                Address = model.Address,
-                RoofId = roofId,
-                SortingOrder = ThisSortingOrder,
-                UserId = userId
-            });
-            _cityContext.SaveChanges();
-        }
-
-        public bool IsAddressAvailable(string address, int id)
+        public bool IsAddressAvailable(string address, int? id)
         {
             var userId = _serviceUtilsDB.GetUserId();
 
             var house = _cityContext.Houses.SingleOrDefault(o => o.Address == address && o.UserId == userId);
+
             if (house == null)
-            {
                 return true;
-            }
+
             else
             {
-                return house.Id == id ? true : false;
+                if (id.HasValue)
+                    return house.Id == id.Value;
+
+                return false;
             }
         }
 
@@ -106,76 +83,35 @@ namespace YousifsProject.Services.Implementations
             }
         }
 
-        public EditHouseVM GetEditHouseVM(int id)
+        public ConfigureHouseVM GetConfigureHouseVM(int? id)
         {
-            House house = _cityContext.Houses.SingleOrDefault(o => o.Id == id);
-            return new EditHouseVM
+            var model = new ConfigureHouseVM
             {
-                Address = house.Address,
-                Id = house.Id,
-                Color = house.Color,
-                HaveBalcony = house.HaveBalcony,
-                HaveDoor = house.HaveDoor,
-                HaveWindow = house.HaveWindow,
-                NumberOfFloors = house.NumberOfFloors,
-                FloorArray = CreateFloorArray(),
-                TypeOfRoofsArray = _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray(),
-                TypeOfRoof = _cityContext.Roofs.Find(house.RoofId).TypeOfRoof
+                FloorArray = _serviceUtilsDB.CreateFloorArray(),
+                TypeOfRoofsArray = _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray()
             };
-        }
 
-        public void EditHouse(EditHouseVM model, int id)
-        {
-            House house = _cityContext.Houses.Find(id);
-            house.Color = model.Color;
-            house.RoofId = _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof == model.TypeOfRoof).Id;
-            house.Address = model.Address;
-            house.HaveBalcony = model.HaveBalcony;
-            house.HaveDoor = model.HaveDoor;
-            house.HaveWindow = model.HaveWindow;
-            house.NumberOfFloors = model.NumberOfFloors;
-            _cityContext.SaveChanges();
-        }
-
-        public BuildHouseVM GetBuildHouseVM()
-        {
-            BuildHouseVM buildVM = new BuildHouseVM();
-            SelectListItem[] selectListItems = CreateFloorArray();
-            buildVM.FloorArray = selectListItems;
-            return buildVM;
-        }
-
-        public SelectListItem[] CreateFloorArray()
-        {
-            SelectListItem[] selectListItems = new SelectListItem[7];
-            for (int i = 0; i <= 6; i++)
+            if (id.HasValue)
             {
-                selectListItems[i] = new SelectListItem { Value = "" + i, Text = "" + (i + 3) };
-            }
-            return selectListItems;
-        }
+                House house = _serviceUtilsDB.GetHouseById(id.Value);
+                if (house == null)
+                {
+                    throw new NotFoundException($"No house found with id {id}");
+                }
 
-        public string[] GetRoofsArray()
-        {
-            return _cityContext.Roofs.Select(o => o.TypeOfRoof).ToArray();
-        }
+                _serviceUtilsDB.CheckAuthorization(house, failMessage: "You don't have permission to configure this house");
 
-        private int GetRoofId(string typeOfRoof)
-        {
-            var RoofId = _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof))?.Id;
+                model.Address = house.Address;
+                model.Id = house.Id;
+                model.Color = house.Color;
+                model.HaveBalcony = house.HaveBalcony;
+                model.HaveDoor = house.HaveDoor;
+                model.HaveWindow = house.HaveWindow;
+                model.NumberOfFloors = house.NumberOfFloors;
+                model.TypeOfRoof = _cityContext.Roofs.Find(house.RoofId).TypeOfRoof;
+            };
 
-            if (RoofId == null)
-            {
-                _cityContext.Roofs.AddRange(
-                     new Roof { TypeOfRoof = "Flat Roof" },
-                     new Roof { TypeOfRoof = "Dome Roof" },
-                     new Roof { TypeOfRoof = "Triangle Roof" }
-                    );
-                _cityContext.SaveChanges();
-                return _cityContext.Roofs.SingleOrDefault(o => o.TypeOfRoof.Contains(typeOfRoof)).Id;
-            }
-            else
-                return (int)RoofId;
+            return model;
         }
 
         public int GetHouseCount()
@@ -187,6 +123,53 @@ namespace YousifsProject.Services.Implementations
         public IndexVM GetIndexVM()
         {
             return new IndexVM { HouseCount = GetHouseCount() };
+        }
+
+        public bool CheckIfValidId(int id)
+        {
+            House house = _serviceUtilsDB.GetHouseById(id);
+            if (house == null)
+                return false;
+            try
+            {
+                _serviceUtilsDB.CheckAuthorization(house, "You don't have permission to configure this house");
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void ConfigureHouse(int? id, ConfigureHouseVM model)
+        {
+            House house = id.HasValue ? _cityContext.Houses.Find(id) : new House();
+
+            house.Color = model.Color;
+            house.RoofId = _serviceUtilsDB.GetRoofId(model.TypeOfRoof);
+            house.Address = model.Address;
+            house.HaveBalcony = model.HaveBalcony;
+            house.HaveDoor = model.HaveDoor;
+            house.HaveWindow = model.HaveWindow;
+            house.NumberOfFloors = model.NumberOfFloors;
+
+            if (!id.HasValue)
+            {
+                var userId = _serviceUtilsDB.GetUserId();
+
+                int ThisSortingOrder = 1;
+                if (_cityContext.Houses.Count() > 0)
+                {
+                    ThisSortingOrder = _cityContext.Houses.Max(o => o.SortingOrder) + 1;
+                }
+                house.SortingOrder = ThisSortingOrder;
+                house.UserId = userId;
+
+                _cityContext.Houses.Add(house);
+            }
+
+            _cityContext.SaveChanges();
         }
     }
 }

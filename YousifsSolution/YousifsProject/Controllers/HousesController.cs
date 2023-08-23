@@ -23,7 +23,6 @@ namespace YousifsProject.Controllers
             return View(model);
         }
 
-
         [HttpGet("indexpartial/")]
         public async Task<IActionResult> IndexPartialAsync(string sort, bool isAscending, string roofs, int minFloor, int MaxFloor)
         {
@@ -36,58 +35,44 @@ namespace YousifsProject.Controllers
             return PartialView("~/Views/Houses/PartialViews/_IndexPartial.cshtml", model);
         }
 
-        [HttpGet("Build")]
-        public IActionResult BuildHouse()
+        [HttpGet("configure-house/{id?}")]
+        public IActionResult ConfigureHouse(int? id)
         {
-            var model = _houseService.GetBuildHouseVM();
-            return View(model);
-        }
-
-        [HttpPost("Build")]
-        public IActionResult BuildHouse(BuildHouseVM model)
-        {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(_houseService.GetBuildHouseVM());
+                var model = _houseService.GetConfigureHouseVM(id);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return NotFound($"No house with id {id}");
             }
 
-            if (!_houseService.IsAddressAvailable(model.Address, -1))
+        }
+
+        [HttpPost("configure-house/{id?}")]
+        public IActionResult ConfigureHouse(int? id, ConfigureHouseVM model)
+        {
+            if (id.HasValue)
             {
-                ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(_houseService.GetBuildHouseVM());
+                bool isValidId = _houseService.CheckIfValidId(id.Value);
+                if (!isValidId)
+                    return NotFound($"No house with id {id}");
             }
 
-            _houseService.AddHouse(model);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [Route("edit/{id}")]
-        [HttpGet]
-        public IActionResult EditHouse(int id)
-        {
-
-            var model = _houseService.GetEditHouseVM(id);
-            return View(model);
-        }
-
-        [HttpPost("/edit/{id}")]
-        public IActionResult EditHouse(EditHouseVM model, int id)
-        {
             if (!ModelState.IsValid)
             {
-                return View(_houseService.GetEditHouseVM(id));
+                return View(_houseService.GetConfigureHouseVM(id));
             }
 
             if (!_houseService.IsAddressAvailable(model.Address, id))
             {
                 ModelState.AddModelError(nameof(model.Address), "The Address is already taken");
-                return View(_houseService.GetEditHouseVM(id));
+                return View(_houseService.GetConfigureHouseVM(id));
             }
 
-            _houseService.EditHouse(model, id);
+            _houseService.ConfigureHouse(id, model);
             return RedirectToAction(nameof(Index));
         }
     }
-
-
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace YousifsProject.Views.Houses.ViewModels
 {
-    public class BuildHouseVM
+    public class ConfigureHouseVM
     {
         [StringLength(maximumLength: 50, MinimumLength = 4, ErrorMessage = "The address must be at least 4 letters")]
         [Required(ErrorMessage = "Write an address")]
@@ -33,6 +33,9 @@ namespace YousifsProject.Views.Houses.ViewModels
         [Required]
         public string TypeOfRoof { get; set; }
 
+        public int Id { get; set; }
+
+        public string[]? TypeOfRoofsArray { get; set; }
         public SelectListItem[]? FloorArray { get; set; }
     }
 }

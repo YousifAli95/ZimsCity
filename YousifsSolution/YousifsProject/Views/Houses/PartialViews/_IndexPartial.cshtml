@@ -9,7 +9,7 @@
         {
             <div data-id="@house.id" onclick="getMenu(@house.id)" class="house draggable" draggable="true">
                 <div data-height="0" id="nav-item-@house.id" class="house-nav">
-                    <a id="edit" href="/edit/@house.id">Edit   </a>
+                    <a id="edit" asp-controller="Houses" asp-action="ConfigureHouse" asp-route-id="@house.id">Edit</a>
                     <a id="delete" onclick="deleteHouse(@house.id)">Delete</a>
                 </div>
 

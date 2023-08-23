@@ -34,7 +34,7 @@ namespace YousifsProject.Services.Implementations
             for (int i = 0; i < idArray.Length; i++)
             {
                 House house = _cityContext.Houses.Find(idArray[i]);
-                CheckAuthorization(house, message: "You don't have permission to reorder this house!");
+                _serviceUtilsDB.CheckAuthorization(house, failMessage: "You don't have permission to reorder this house!");
 
                 house.SortingOrder = i;
             }
@@ -49,18 +49,10 @@ namespace YousifsProject.Services.Implementations
                 throw new NotFoundException($"House with Id = {id} not found");
             }
 
-            CheckAuthorization(houseToDelete, message: "You don't have permission to delete this house!");
+            _serviceUtilsDB.CheckAuthorization(houseToDelete, failMessage: "You don't have permission to delete this house!");
 
             _cityContext.Remove(houseToDelete);
             _cityContext.SaveChanges();
-        }
-
-        private void CheckAuthorization(House house, string message)
-        {
-            if (house.UserId != _serviceUtilsDB.GetUserId())
-            {
-                throw new UnauthorizedAccessException(message);
-            }
         }
     }
 }

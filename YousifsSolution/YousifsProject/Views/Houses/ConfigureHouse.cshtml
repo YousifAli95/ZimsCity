@@ -4,14 +4,23 @@
 @section CSS{
     <link rel="stylesheet" href="~/CSS/Build.css">
 }
-@section scripts{
-    <partial name="_ValidationScripts"/>
-}
-@model EditHouseVM
 
-<form asp-controller="Houses" asp-action="EditHouse">
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+
+@model ConfigureHouseVM
+
+<form asp-controller="Houses" asp-action="ConfigureHouse">
     <div class="form-container">
-        <h1>Edit Your House</h1>
+        @if (Model.Id == 0)
+        {
+            <h1>Configure Your House</h1>
+        }
+        else
+        {
+            <h1>Edit Your House</h1>
+        }
 
         <div class="Adress">
             <span class="valid-span" asp-validation-for="Address"></span>
@@ -34,7 +43,7 @@
             <legend>Type of Roof</legend>
             @for (int index = 0; index < Model.TypeOfRoofsArray.Length; index++)
             {
-                if (Model.TypeOfRoof == Model.TypeOfRoofsArray[index])
+                if (Model.TypeOfRoof == Model.TypeOfRoofsArray[index] || (Model.Id == 0 && index == 0))
                 {
                     <input asp-for="TypeOfRoof" id="@index" type="radio" value="@Model.TypeOfRoofsArray[index]" checked />
                 }
@@ -64,6 +73,7 @@
                 </div>
             </div>
         </fieldset>
+
         <input class="btn" type="submit" value="Submit Edit" />
     </div>
 </form>

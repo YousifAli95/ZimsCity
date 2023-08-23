@@ -31,7 +31,7 @@ namespace YousifsProject
             switch (serviceImplementation)
             {
                 case "HouseServiceDB":
-                    builder.Services.AddTransient<ServiceUtilsDB>();
+                    builder.Services.AddScoped<ServiceUtilsDB>();
                     builder.Services.AddTransient<IWebApiService, WebApiServiceDB>();
                     builder.Services.AddTransient<IHouseService, HouseServiceDB>();
                     builder.Services.AddTransient<IIdentityService, IdentityServiceDB>();
