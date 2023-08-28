@@ -1,0 +1,65 @@
+﻿@model IndexVM
+
+@{
+    ViewBag.Title = "Zims City";
+}
+
+@section CSS{
+    <link rel="stylesheet" href="~/CSS/Index.css">
+}
+
+@section scripts{
+    <script defer src="/JS/Index.js"></script>
+    <script defer src="https://kit.fontawesome.com/2381c935ba.js" crossorigin="anonymous"></script>
+}
+
+@if (Model.HouseCount != 0)
+{
+    <div id="sort-filter-container">
+        <div id="filter-container" class="sort-filter">
+            <button id="filter-span">Filters</button>
+
+            <div class="filter">
+                <div class="input-filter-div">
+                    <input class="int-filter" name="max" type="number" value="9" id="maxFloor" min="3" max="9" />
+                    <label class="int-label" for="maxFloor">Max Floor</label>
+                </div>
+                <div class="input-filter-div">
+                    <input class="int-filter" name="min" type="number" value="3" id="minFloor" min="3" max="9" />
+                    <label class="int-label" for="minFloor">Min Floor</label>
+                </div>
+                <div class="input-filter-div">
+                    <input type="checkbox" id="check1" class="checkbox-filter" value="Flat Roof" checked />
+                    <label for="check1">Flat Roof</label>
+                </div>
+                <div class="input-filter-div">
+                    <input type="checkbox" id="check2" class="checkbox-filter" value="Triangle Roof" checked />
+                    <label for="check2">Triangle Roof</label>
+                </div>
+                <div class="input-filter-div">
+                    <input type="checkbox" id="check3" class="checkbox-filter" value="Dome Roof" checked />
+                    <label for="check3">Dome Roof</label>
+                </div>
+            </div>
+        </div>
+        <div id="select-filter-div" class="sort-filter">
+            <select name="select-filter" id="select-filter">
+                <option value="NumberOfFloors">Height Ascending</option>
+                <option value="NumberOfFloors">Height Descending</option>
+                <option value="Address" selected="selected">Address Ascending</option>
+                <option value="Address">Address Descending</option>
+                <option value="SortingOrder">Custom Order</option>
+
+
+            </select>
+        </div>
+
+    </div>
+}
+
+
+<div class="super-container"><p class="loading">Loading</p></div>
+
+
+
+

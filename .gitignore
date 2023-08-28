@@ -3,11 +3,9 @@
 ################################################################################
 
 /.vs/
-/YousifsSolution/YousifsProject/obj
-/YousifsSolution/YousifsProject/bin
+/YousifsSolution/ZimsCityProject/obj
+/YousifsSolution/ZimsCityProject/bin
 /YousifsSolution/.vs/YousifsSolution
+/YousifsSolution/.vs/ZimsCitySolution
 /YousifsSolution/.vs/ProjectEvaluation
-/YousifsSolution/MyDatabase/MyDatabase.dbmdl
-/YousifsSolution/MyDatabase/bin
-/YousifsSolution/MyDatabase/obj
-/YousifsSolution/MyDatabase
+

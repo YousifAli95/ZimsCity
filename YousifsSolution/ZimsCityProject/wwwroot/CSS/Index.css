@@ -1,0 +1,348 @@
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 65rem;
+}
+
+
+.house {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2rem;
+    margin-bottom: 6rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.house-nav {
+    position: absolute;
+    width: 12rem;
+    height: 0rem;
+    background: rgb(72, 71, 71);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    transition: 300ms ease-in;
+    font-size: 2rem;
+    overflow: hidden;
+}
+
+.house-nav-height-10 {
+    height: 10rem;
+}
+
+.house-nav > * {
+    margin-bottom: 1.5rem;
+    display: block;
+    color: white;
+}
+
+    .house-nav > *:hover {
+        color: skyblue;
+    }
+
+.house-nav > #delete:after {
+    content: "\f1f8";
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.5rem;
+    margin-left: 0.8rem;
+}
+
+.house-nav > #edit:after {
+    content: "\f044";
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.5rem;
+    margin-left: 0.8rem;
+}
+
+.roof {
+    width: 0;
+    height: 0;
+    border-left: 6rem solid transparent;
+    border-right: 6rem solid transparent;
+    border-bottom: 8rem solid;
+    position: relative;
+}
+
+.balcony {
+    width: 4rem;
+    fill: white;
+    height: auto;
+    position: absolute;
+    margin-top: 3rem;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#balcony2 {
+    width: 4.5rem;
+    margin-top: 2.5rem;
+}
+
+.house-window {
+    width: var(--house-width);
+    height: 6rem;
+    background: var(--house-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.window {
+    fill: white;
+    width: 4rem;
+}
+
+.house-door {
+    width: var(--house-width);
+    height: 4.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.door {
+    fill: white;
+    height: 4rem;
+}
+
+.floor {
+    width: calc(var(--house-width) + 2rem);
+    height: 2rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.navbutton {
+    margin-bottom: 2rem;
+}
+
+.house:hover {
+    filter: grayscale(0.5)
+}
+
+    .house:hover svg {
+        fill: grey;
+    }
+
+a {
+    text-decoration: none;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
+    cursor: move;
+}
+
+select, option {
+    cursor: pointer;
+}
+
+#no-house-div {
+    text-align: center;
+}
+
+    #no-house-div > * {
+        margin: 2rem;
+    }
+
+#no-house-p {
+    font-size: 2.5rem;
+}
+
+.no-house-a {
+    padding: 2rem;
+    background-color: var(--navbar-color);
+    border: 0.1rem solid var(--navbar-color);
+    font-size: 2rem;
+    border-radius: 0.5rem;
+    color: white;
+    display: block;
+}
+
+    .no-house-a:hover, .no-house-a:focus {
+        background-color: white;
+        color: var(--navbar-color);
+        font-weight: 400;
+    }
+
+
+    .no-house-a:active {
+        box-shadow: 0 1px rgba(20, 20, 20, 0.966);
+        transform: translateY(0.3rem);
+        outline: var(--navbar-color) 0.2rem solid;
+    }
+
+.loading {
+    font-size: 4rem;
+    width: 16rem;
+    margin: 0;
+}
+
+    .loading::after {
+        content: "";
+        animation: loading-animation 1500ms infinite;
+    }
+
+@keyframes loading-animation {
+    0% {
+        content: ".";
+    }
+
+    33% {
+        content: "..";
+    }
+
+    66% {
+        content: "...";
+    }
+}
+
+#sort-filter-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 3rem;
+    margin-right: 1rem;
+}
+
+#select-filter {
+    text-align: center;
+    width: 20rem;
+}
+
+#select-filter-div {
+    margin-left: 10rem;
+}
+
+#sort, #filter-span {
+    box-sizing: border-box;
+    height: 4.5rem;
+}
+
+.int-filter {
+    padding: 0.5rem;
+    font-size: 2rem;
+    width: 5rem;
+}
+
+
+.int-label {
+    font-size: 2rem;
+    margin: 0 1rem 0 0.4rem;
+}
+
+label {
+    cursor: pointer
+}
+
+.checkboxes label {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+#filter-container {
+    position: relative;
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.sort-filter {
+    width: 20rem;
+}
+
+#filter-span {
+    display: flex;
+    width: inherit;
+    color: inherit;
+    font-family: 'Times New Roman', 'Times New Roman', Times, serif;
+    font-size: inherit;
+    background-color: var(--navbar-color);
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border: 0.3rem solid white;
+}
+
+
+.filter {
+    position: absolute;
+    background: var(--navbar-color);
+    height: 0rem;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem;
+    overflow: hidden;
+    transition: height ease-in 500ms, padding ease-in 500ms;
+    z-index: 2;
+}
+
+    .filter input {
+        box-sizing: border-box;
+        height: 4rem;
+        text-align: center;
+    }
+
+.checkbox-filter {
+    width: 4rem;
+    margin-right: 1rem;
+}
+
+.filter > :not(:first-child) {
+    margin-top: 1.5rem;
+}
+
+.input-filter-div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+}
+
+#filter-container:hover .filter, #filter-container:focus-visible .filter, #filter-container:focus-within .filter {
+    height: 30rem;
+}
+
+#filter-container:hover #filter-span {
+    border: none;
+}
+
+@media (max-width: 860px) {
+    #sort-filter-container {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    #sort-filter-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #select-filter-div {
+        margin-left: 0;
+        margin-top: 4rem;
+    }
+}
