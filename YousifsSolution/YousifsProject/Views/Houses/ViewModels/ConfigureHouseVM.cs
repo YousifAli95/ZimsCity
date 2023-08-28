@@ -33,6 +33,11 @@ namespace YousifsProject.Views.Houses.ViewModels
         [Required]
         public string TypeOfRoof { get; set; }
 
+        [Required]
+        [Display(Name = "Width")]
+        [Range(8, 36, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        public int Width { get; set; }
+
         public int Id { get; set; }
 
         public string[]? TypeOfRoofsArray { get; set; }

@@ -10,6 +10,6 @@ namespace YousifsProject.Services.Interfaces
         void ConfigureHouse(int? id, ConfigureHouseVM model);
         public bool IsAddressAvailable(string address, int? id);
         public int GetHouseCount();
-        bool CheckIfValidId(int id);
+        bool CheckIfValidHouseId(int id);
     }
 }

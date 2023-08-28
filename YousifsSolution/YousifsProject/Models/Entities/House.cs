@@ -4,7 +4,6 @@ namespace YousifsProject.Models.Entities
 {
     public partial class House
     {
-
         public int Id { get; set; }
         public string Address { get; set; } = null!;
         public string Color { get; set; } = null!;
@@ -14,7 +13,8 @@ namespace YousifsProject.Models.Entities
         public bool HaveDoor { get; set; }
         public int NumberOfFloors { get; set; }
         public int SortingOrder { get; set; }
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
+        public int Width { get; set; }
         public virtual AspNetUser UserNavigation { get; set; } = null!;
         public virtual Roof Roof { get; set; } = null!;
 

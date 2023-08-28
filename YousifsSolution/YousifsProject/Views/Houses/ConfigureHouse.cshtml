@@ -2,11 +2,13 @@
     ViewBag.Title = "Edit a House";
 }
 @section CSS{
-    <link rel="stylesheet" href="~/CSS/Build.css">
+    <link rel="stylesheet" href="~/CSS/ConfigureHouse.css">
 }
 
 @section scripts{
     <partial name="_ValidationScripts" />
+    <script defer src="/JS/ConfigureHouse.js"></script>
+
 }
 
 @model ConfigureHouseVM
@@ -23,9 +25,9 @@
         }
 
         <div class="Adress">
-            <span class="valid-span" asp-validation-for="Address"></span>
             <label asp-for="Address"></label>
-            <input required asp-for="Address" />
+            <span class="valid-span" asp-validation-for="Address"></span>
+            <input asp-for="Address" required />
         </div>
 
         <div>
@@ -36,7 +38,13 @@
 
         <div class="Color">
             <label asp-for="Color"></label>
-            <input asp-for="Color" name="Color" type="color" />
+            <input asp-for="Color" type="color" />
+        </div>
+
+        <div class="container-house-width">
+            <label id="house-width-label" for="Width">House Width: @(Model.Width + "m")</label>
+            <input type="range" asp-for="Width" id="house-width" min="8" max="36" />
+            <span class="valid-span" asp-validation-for="Width"></span>
         </div>
 
         <fieldset>
@@ -73,7 +81,13 @@
                 </div>
             </div>
         </fieldset>
-
-        <input class="btn" type="submit" value="Submit Edit" />
+                @if (Model.Id == 0)
+        {
+            <input class="btn" type="submit" value="Build House" />
+        }
+        else
+        {
+            <input class="btn" type="submit" value="Edit House" />
+        }
     </div>
 </form>

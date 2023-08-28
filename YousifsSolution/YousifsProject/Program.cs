@@ -39,7 +39,6 @@ namespace YousifsProject
                     var typeOfConnection = "DefaultConnection";
                     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-
                     if (string.Equals(environment, "Development", StringComparison.OrdinalIgnoreCase))
                     {
                         typeOfConnection = "ProductionConnection";

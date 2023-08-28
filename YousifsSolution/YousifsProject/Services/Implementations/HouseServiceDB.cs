@@ -70,6 +70,7 @@ namespace YousifsProject.Services.Implementations
                 TypeOfRoof = o.Roof.TypeOfRoof,
                 SortingOrder = o.SortingOrder,
                 id = o.Id,
+                Width = o.Width
 
             }).ToArrayAsync();
 
@@ -108,8 +109,14 @@ namespace YousifsProject.Services.Implementations
                 model.HaveDoor = house.HaveDoor;
                 model.HaveWindow = house.HaveWindow;
                 model.NumberOfFloors = house.NumberOfFloors;
+                model.Width = house.Width;
                 model.TypeOfRoof = _cityContext.Roofs.Find(house.RoofId).TypeOfRoof;
-            };
+            }
+            else
+            {
+                var defaultHouseWidth = 12;
+                model.Width = defaultHouseWidth;
+            }
 
             return model;
         }
@@ -125,7 +132,7 @@ namespace YousifsProject.Services.Implementations
             return new IndexVM { HouseCount = GetHouseCount() };
         }
 
-        public bool CheckIfValidId(int id)
+        public bool CheckIfValidHouseId(int id)
         {
             House house = _serviceUtilsDB.GetHouseById(id);
             if (house == null)
@@ -153,18 +160,16 @@ namespace YousifsProject.Services.Implementations
             house.HaveDoor = model.HaveDoor;
             house.HaveWindow = model.HaveWindow;
             house.NumberOfFloors = model.NumberOfFloors;
+            house.Width = model.Width % 2 == 1 ? model.Width + 1 : model.Width; // Sets the width to an even number.
 
             if (!id.HasValue)
             {
                 var userId = _serviceUtilsDB.GetUserId();
-
-                int ThisSortingOrder = 1;
-                if (_cityContext.Houses.Count() > 0)
-                {
-                    ThisSortingOrder = _cityContext.Houses.Max(o => o.SortingOrder) + 1;
-                }
-                house.SortingOrder = ThisSortingOrder;
                 house.UserId = userId;
+
+                int? maxSortingOrder = _cityContext.Houses.Max(o => (int?)o.SortingOrder);
+                // Sorting order is 1 if there are no other houses in the city. Otherwise it's +1 the number of houses.  
+                house.SortingOrder = (maxSortingOrder ?? 0) + 1;
 
                 _cityContext.Houses.Add(house);
             }

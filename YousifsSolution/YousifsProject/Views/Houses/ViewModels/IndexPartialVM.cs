@@ -11,27 +11,41 @@
         public bool HaveDoor { get; set; }
         public string Address { get; set; }
         public int SortingOrder { get; set; }
+        public int Width { get; set; }
 
 
-
-        public string GetStyle()
+        public string GetRoofStyle()
         {
-            if (TypeOfRoof == "Flat Roof")
+            string style = "";
+
+            switch (TypeOfRoof)
             {
-                return $"border-bottom-color: {Color}; background-color: {Color};";
+                case "Flat Roof":
+                    style += $"border-bottom-color: {Color}; ";
+                    style += $"background-color: {Color}; ";
+                    style += $"border-left: {Width / 2}rem solid transparent; ";
+                    style += $"border-right: {Width / 2}rem solid transparent; ";
+                    break;
+
+                case "Triangle Roof":
+                    style += $"border-bottom-color: {Color}; ";
+                    style += $"border-left: {Width / 2}rem solid transparent; ";
+                    style += $"border-right: {Width / 2}rem solid transparent; ";
+                    break;
+
+                case "Dome Roof":
+                    style += $"border-radius: {Width / 2}rem {Width / 2}rem 0 0; ";
+                    style += $"border-bottom-color: {Color}; ";
+                    style += $"background-color: {Color}; ";
+                    style += $"border-left: {Width / 2}rem solid transparent; ";
+                    style += $"border-right: {Width / 2}rem solid transparent; ";
+                    break;
+
+                default:
+                    break;
             }
-            else if (TypeOfRoof == "Triangle Roof")
-            {
-                return $"border-bottom-color: {Color}";
-            }
-            else if (TypeOfRoof == "Dome Roof")
-            {
-                return $"background-color: {Color}; border-radius: 6rem 6rem 0 0; border-bottom-color: {Color} ";
-            }
-            else
-            {
-                return "";
-            }
+
+            return style;
         }
     }
 }

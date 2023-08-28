@@ -55,7 +55,7 @@ namespace YousifsProject.Controllers
         {
             if (id.HasValue)
             {
-                bool isValidId = _houseService.CheckIfValidId(id.Value);
+                bool isValidId = _houseService.CheckIfValidHouseId(id.Value);
                 if (!isValidId)
                     return NotFound($"No house with id {id}");
             }

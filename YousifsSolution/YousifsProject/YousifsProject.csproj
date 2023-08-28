@@ -37,7 +37,7 @@
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Update="wwwroot\CSS\Build.css">
+		<Content Update="wwwroot\CSS\ConfigureHouse.css">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
