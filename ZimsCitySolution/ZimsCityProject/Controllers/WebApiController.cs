@@ -19,42 +19,47 @@ namespace ZimsCityProject.Controllers
         [Route("save-movings")]
         public IActionResult SaveMovings(int[] idArray)
         {
-            return RunApiFunction(() => _webApiService.ReorderHouses(idArray), successsMessage: "House order saved successfully");
+            string successMessage = "House order saved successfully";
+            int statusCode = StatusCodes.Status204NoContent;
+            return RunApiFunction(() => _webApiService.ReorderHouses(idArray), successMessage, statusCode);
         }
 
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            return RunApiFunction(() => _webApiService.DeleteHouse(id), successsMessage: "House deleted successfully");
+            string successMessage = "House deleted successfully";
+            int statusCode = StatusCodes.Status204NoContent;
+            return RunApiFunction(() => _webApiService.DeleteHouse(id), successMessage, statusCode);
         }
-
 
         [HttpDelete("DeleteAll")]
         public IActionResult DeleteAllHouses()
         {
-            return RunApiFunction(() => _webApiService.DeleteAllHouses(), successsMessage: "All user houses deleted successfully");
+            string successMessage = "All user houses deleted successfully";
+            int statusCode = StatusCodes.Status204NoContent;
+            return RunApiFunction(() => _webApiService.DeleteAllHouses(), successMessage, statusCode);
         }
 
-        private IActionResult RunApiFunction(Action action, string successsMessage)
+        private IActionResult RunApiFunction(Action action, string successMessage, int statusCode)
         {
             try
             {
                 action();
-                return Ok(new { message = successsMessage });
+                return StatusCode(statusCode, new { message = successMessage });
             }
             catch (NotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(new { message = ex.Message });
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Unauthorized(ex.Message);
+                return Unauthorized(new { message = ex.Message });
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred");
             }
-        }
 
+        }
     }
 }

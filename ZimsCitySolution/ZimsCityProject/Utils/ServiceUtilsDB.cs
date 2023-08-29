@@ -28,6 +28,11 @@ namespace ZimsCityProject.Utils
 
         public void CheckAuthorization(House house, string failMessage)
         {
+            if (house == null)
+            {
+                throw new ArgumentNullException(nameof(house));
+            }
+
             if (house.UserId != GetUserId())
             {
                 throw new UnauthorizedAccessException(failMessage);
