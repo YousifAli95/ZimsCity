@@ -84,9 +84,7 @@ namespace ZimsCityProject.Controllers
             return RedirectToAction(nameof(Login), nameof(IdentityController).Replace("Controller", ""));
         }
 
-
         ActionResult RedirectToIndex() => RedirectToAction(nameof(HousesController.Index), nameof(HousesController).Replace("Controller", ""));
-
     }
 
 }

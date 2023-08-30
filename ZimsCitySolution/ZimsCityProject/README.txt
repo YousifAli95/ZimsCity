@@ -1,1 +1,1 @@
-﻿Either run the command "update-database" in your nuget manager console or publish the database project to a database with the name "CityDB"
+﻿To run this project locally, create a local database called "CityDB" run the command "update-database" in your nuget manager console.

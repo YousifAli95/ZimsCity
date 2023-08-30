@@ -7,10 +7,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="SVGs\**" />
-	  <Content Remove="SVGs\**" />
-	  <EmbeddedResource Remove="SVGs\**" />
-	  <None Remove="SVGs\**" />
+		<Compile Remove="SVGs\**" />
+		<Content Remove="SVGs\**" />
+		<EmbeddedResource Remove="SVGs\**" />
+		<None Remove="SVGs\**" />
 	</ItemGroup>
 
 	<ItemGroup>
